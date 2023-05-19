@@ -1,8 +1,11 @@
 <script lang="ts">
     import {StorageKeys} from "$lib/data/storageKeys";
+    import {onMount} from "svelte";
 
-    const id = Math.floor(Math.random() * 101);
-    sessionStorage.setItem(StorageKeys.SESSION_ID, ""+id)
+    onMount(()=>{
+        const id = Math.floor(Math.random() * 101);
+        sessionStorage.setItem(StorageKeys.SESSION_ID, ""+id)
+    })
 
 </script>
 <div class="h-full w-full flex  justify-center items-center">
