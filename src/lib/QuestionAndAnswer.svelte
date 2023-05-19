@@ -1,5 +1,6 @@
 <script lang="ts">
     import AudioAnswer from "./AudioAnswer.svelte";
+    import type {DndEvent} from "svelte-dnd-action";
     import {dndzone} from "svelte-dnd-action";
     import type QuestionAndAnswerData from "./data/QuestionAndAnswerData";
     import type AnswerPair from "./data/AnswerPair";
@@ -7,9 +8,12 @@
     import AnswerOption from "$lib/AnswerOption.svelte";
     import AudioResult from "$lib/data/AudioResult";
     import {StorageKeys} from "$lib/data/storageKeys";
+    import type {AnswerOptionData, DndItem} from "$lib/data/AnswerOptionData";
 
 
-    export let locked = true
+    // export let locked = true
+    export let setLocked = (state:boolean) => {""}
+
     export let data: QuestionAndAnswerData
     let items: DndItem[] = data.answerOptions || [{id: 0, text: "error"}]
     let answers: AnswerPair = data.answers
@@ -43,7 +47,7 @@
             items = items.filter(item => item.id != localRes.choiceOne.option?.id && item.id != localRes.choiceTwo.option?.id)
             // if all items are placed, unlock the next button
             if (items.length == 0) {
-                locked = false
+                setLocked(false)
             }
         }
 
@@ -93,7 +97,7 @@
             answerOneItems = items
             items = []
         }
-        locked = false
+        setLocked(false)
     }
 
     // const dropTargetStyle = {"border-color": "green"}

@@ -25,5 +25,8 @@ module.exports = {
 				parser: '@typescript-eslint/parser'
 			}
 		}
-	]
+	],
+	rules: {
+		"@typescript-eslint/ban-ts-comment": "off"
+	}
 };

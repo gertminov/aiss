@@ -1,6 +1,6 @@
 import type Result from "$lib/data/Result";
 import type AudioChoice from "$lib/data/AudioChoice";
-import type Question from "$lib/data/Question";
+import type {Question} from "$lib/data/Question";
 
 export default class AudioResult implements Result {
     choiceOne: AudioChoice

@@ -1,14 +1,17 @@
 
 <script lang="ts">
     import {Step} from "@skeletonlabs/skeleton";
-    import type QuestionAndAnswerData from "./data/QuestionAndAnswerData";
-    import QuestionAndAnswer from "$lib/QuestionAndAnswer.svelte";
-    export let data: QuestionAndAnswerData
-    let locked:boolean
+
+    let locked = true
+
+    function setLocked(state: boolean) {
+        locked = state
+    }
+
 
 
 </script>
 
-<Step {locked} >
-    <QuestionAndAnswer {data} bind:locked={locked}/>
+<Step {locked}  >
+    <slot {locked} {setLocked}/>
 </Step>
