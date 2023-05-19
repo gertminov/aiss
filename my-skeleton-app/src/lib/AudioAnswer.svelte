@@ -11,8 +11,8 @@
     import {browser} from "$app/environment";
 
     export let data: AudioAnswerData
-    export let items: DndItem[] = []
-    export let overflow: DndItem[] = []
+    export let items: AnswerOption[] = []
+    export let overflow: AnswerOption[] = []
 
     let progress: number = 0
 

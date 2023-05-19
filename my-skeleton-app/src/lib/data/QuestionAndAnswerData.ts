@@ -1,8 +1,9 @@
-import type {AudioAnswerData} from "./AudioAnswerData";
+import type AnswerPair from "$lib/data/AnswerPair";
+import type Question from "$lib/data/Question";
 
 export default interface QuestionAndAnswerData {
-    question: string
-    answerOptions: DndItem[]
-    answers: {one: AudioAnswerData, two: AudioAnswerData}
+    question: Question
+    answerOptions: AnswerOptionData[]
+    answers: AnswerPair
 
 }

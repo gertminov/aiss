@@ -2,22 +2,24 @@
     import AudioAnswer from "./AudioAnswer.svelte";
     import {dndzone} from "svelte-dnd-action";
     import type QuestionAndAnswerData from "./data/QuestionAndAnswerData";
-    import type {AudioAnswerData} from "./data/AudioAnswerData"
     import type AnswerPair from "./data/AnswerPair";
-    import AnswerOption from "./AnswerOption.svelte";
+    import {onDestroy, onMount} from "svelte";
+    import AnswerOption from "$lib/AnswerOption.svelte";
+    import AudioResult from "$lib/data/AudioResult";
+    import {StorageKeys} from "$lib/data/storageKeys";
 
 
     export let locked = true
     export let data: QuestionAndAnswerData
-    let items = data.answerOptions || [{id: 0, text: "error"}]
+    let items: DndItem[] = data.answerOptions || [{id: 0, text: "error"}]
     let answers: AnswerPair = data.answers
-    let answerOneItems: DndItem[]
-    let answerOneOverflow: DndItem[] = []
+    let answerOneItems: AnswerOptionData[]
+    let answerOneOverflow: AnswerOptionData[] = []
 
-    let answerTwoItems: DndItem[]
-    let answerTwoOverflow: DndItem[] = []
+    let answerTwoItems: AnswerOptionData[]
+    let answerTwoOverflow: AnswerOptionData[] = []
 
-    $: {
+    $: { // if two answer options get dragged intro one slot, the old one will be switched to the other slot
         if (answerOneOverflow.length > 0) {
             answerTwoItems = answerOneOverflow
             answerOneOverflow = []
@@ -27,33 +29,85 @@
         }
     }
 
+    // Time Tracking pro Frage
+    let startTime: Date
+    onMount(() => {
+        startTime = new Date()
+        // get stored Data from local storage
+        const localRes = JSON.parse(sessionStorage.getItem(StorageKeys.QUESTION + data.question.id)) as AudioResult
+        if (localRes) {
+            // if an option is already set, put it int the D&D container
+            if (localRes.choiceOne.option) answerOneItems = [localRes.choiceOne.option]
+            if (localRes.choiceTwo.option) answerTwoItems = [localRes.choiceTwo.option]
+            // filter the already set options out of the not set containter
+            items = items.filter(item => item.id != localRes.choiceOne.option?.id && item.id != localRes.choiceTwo.option?.id)
+            // if all items are placed, unlock the next button
+            if (items.length == 0) {
+                locked = false
+            }
+        }
+
+    })
+
+    onDestroy(() => {
+        if (!startTime) return // I think it's a dev problem, but when the component is destroyed before its mounted the calculation does not work
+        let endTime = new Date()
+        const time = (endTime.getTime() - startTime.getTime())
+        console.log("time milli: " + time)
+
+
+        const res = new AudioResult(
+            time,
+            data.question,
+            {
+                audioAnswer: answers.one,
+                option: answerOneItems[0]
+            },
+            {
+                audioAnswer: answers.two,
+                option: answerTwoItems[0]
+            }
+        )
+        sessionStorage.setItem(StorageKeys.QUESTION + data.question.id, JSON.stringify(res))
+        console.log("Result:", res)
+    })
+
 
     function handleConsider(e) {
         items = e.detail.items
     }
 
-    function handleFinalize(e) {
-        items = e.detail.items
-        if (answerOneItems.length > 0) {
+    function handleFinalize(e: CustomEvent<DndEvent>) {
+        const eventItems = e.detail.items as DndItem[]
+
+        if (items.length == 1 && items[0].isDndShadowItem) { // put item back to answeroptions
+            items = eventItems
+            return
+        }
+
+        items = eventItems
+        if (answerOneItems.length > 0) { // answerOne got moved, answerTwo will be moved automatically
             answerTwoItems = items
             items = []
-        }else if (answerTwoItems.length > 0) {
+        } else if (answerTwoItems.length > 0) { // answerTwo got moved answerOne will be moved automatically
             answerOneItems = items
             items = []
         }
         locked = false
     }
 
-    const dropTargetStyle = {"border-color": "green"}
+    // const dropTargetStyle = {"border-color": "green"}
+
+    const dropTargetStyle = {}
 </script>
 
 
 <div class="mx-2">
-    <p>{data.question}</p>
+    <p>{data.question.text}</p>
     <section use:dndzone={{items, dropTargetStyle}}
              on:consider={handleConsider}
              on:finalize={handleFinalize}
-             class="flex justify-around h-10 my-4"
+             class="flex justify-around h-10  my-4 "
     >
         {#each items as item(item.id)}
             <AnswerOption text={item.text}/>

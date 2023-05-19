@@ -9,6 +9,6 @@
 
 </script>
 
-<Step {locked}>
+<Step {locked} >
     <QuestionAndAnswer {data} bind:locked={locked}/>
 </Step>
