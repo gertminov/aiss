@@ -7,9 +7,8 @@
         const id = Math.floor(Math.random() * 101);
         sessionStorage.setItem(StorageKeys.SESSION_ID, "" + id)
     })
-
-
 </script>
+
 <MiddleCard>
     <header class="card-header">
         <h1 class="h1">Willkommen bei der Studie</h1>

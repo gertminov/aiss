@@ -1,15 +1,13 @@
 <script lang="ts">
-    import CenterStepper from "$lib/CenterStepper.svelte";
-    import LockedStep from "$lib/LockedStep.svelte";
     import NumberQuestion from "$lib/NumberQuestion.svelte";
-
+    import MiddleCard from "$lib/MiddleCard.svelte";
+    import RadioQuestion from "$lib/RadioQuestion.svelte";
+    import RadioQuestionFreeEntry from "$lib/RadioQuestionFreeEntry.svelte";
+    let options = ["eins", "zwei", "drei"]
 </script>
 
-<CenterStepper>
-    <LockedStep let:setLocked>
-        <NumberQuestion {setLocked}/>
-    </LockedStep>
-    <LockedStep let:setLocked>
-        <NumberQuestion {setLocked}/>
-    </LockedStep>
-</CenterStepper>
+<MiddleCard>
+<!--    <NumberQuestion/>-->
+<!--    <RadioQuestion {options}/>-->
+    <RadioQuestionFreeEntry {options} />
+</MiddleCard>
