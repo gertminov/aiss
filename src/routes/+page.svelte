@@ -19,6 +19,6 @@
         </p>
     </section>
     <footer class="card-footer flex justify-center">
-        <a href="questions" class="btn variant-filled font-bold md:w-32 w-full">Ready?</a>
+        <a href="datapolicy" class="btn variant-filled font-bold md:w-32 w-full">Ready?</a>
     </footer>
 </MiddleCard>

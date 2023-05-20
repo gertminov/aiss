@@ -1,32 +1,17 @@
 <script lang="ts">
-    import BigButton from "$lib/BigButton.svelte";
-    import {goto} from "$app/navigation";
+    import Question from "$lib/Question.svelte";
+    import {ne} from "drizzle-orm";
 
-    function onSubmit(e) {
-        const formData = new FormData(e.target);
-        for (let field of formData) {
-            const [key, value] = field;
-            console.log(value)
-        }
-        goto("questions")
-    }
+    export let text = "no Question Text Given"
+    export let nextRoute
 
-    let disabled = "true"
+    let active
     function unlockButton(e) {
         let inputValue = e.target.value
-        if (inputValue) {
-            disabled = "";
-        } else {
-            disabled= "true"
-        }
+        active = !!inputValue;
 
     }
 </script>
-<form on:submit|preventDefault={onSubmit} class="p-4 flex flex-col gap-4">
-    <label for="age" class="h3">Wie alt sind Sie?</label>
+<Question {text} {active} next={nextRoute}>
     <input on:input={unlockButton} class="input" name="age" id="age" title="Input (number)" type="number"/>
-    <div class="flex justify-end items-center">
-        <span class="px-4 md:inline hidden text-white/40">Enter für weiter</span>
-        <BigButton bind:disabled={disabled} type="submit">Weiter</BigButton>
-    </div>
-</form>
+</Question>

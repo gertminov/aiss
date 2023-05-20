@@ -1,6 +1,6 @@
 <script lang="ts">
     export let type: "reset"| "button" | "submit" = "button"
-    export let disabled = true
+    export let disabled = false
 </script>
 <button on:click
         type="{type}"
