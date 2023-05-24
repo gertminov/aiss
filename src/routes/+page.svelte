@@ -1,12 +1,5 @@
 <script lang="ts">
-    import {StorageKeys} from "$lib/data/storageKeys";
-    import {onMount} from "svelte";
     import MiddleCard from "$lib/MiddleCard.svelte";
-
-    onMount(() => {
-        const id = Math.floor(Math.random() * 101);
-        sessionStorage.setItem(StorageKeys.SESSION_ID, "" + id)
-    })
 </script>
 
 <MiddleCard>

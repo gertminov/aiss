@@ -5,8 +5,13 @@
     let options = ["Hauptschule", "Abitur", "Bachelor Studium", "Master Studium"]
     let questionText = "Was ist ihr höchster Bildungsabschluss"
     let nextRoute = "/questions"
+    const questionID = "education"
 </script>
 
 <MiddleCard bg={false}>
-    <RadioQuestion {questionText} {options} {nextRoute} vertical={true}/>
+    <RadioQuestion {nextRoute}
+                   {options}
+                   {questionText}
+                   {questionID}
+                   vertical={true}/>
 </MiddleCard>

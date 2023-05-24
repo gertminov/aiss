@@ -3,23 +3,20 @@
     import {goto} from "$app/navigation";
     import BigButton from "$lib/BigButton.svelte";
     import {onMount} from "svelte";
+    import {enhance} from "$app/forms";
+    import {StorageKeys} from "$lib/data/storageKeys";
+    import {sessionID} from "../store";
 
     export let next = ""
     export let text = "empty Question Text"
+
+    export let questionID: string
+
 
     export let form
 
     export let listenForEnter = false
 
-    function onSubmit(e) {
-        console.log("submit")
-        const formData = new FormData(e.target);
-        for (let field of formData) {
-            const [key, value] = field;
-            console.log(value)
-        }
-        goto(next)
-    }
 
     export let active = false
     $: disabled = active ? "" : "true"
@@ -38,8 +35,15 @@
 </script>
 <div class="flex flex-col gap-4">
     <div class="flex justify-center"><p class="px-4 h3">{@html text}</p></div>
-    <form bind:this={form} on:submit|preventDefault={onSubmit} class="p-4 flex flex-col gap-4 items-center">
+    <form bind:this={form}
+          method="post"
+          action="/demographic?/submit"
+          use:enhance
+          class="p-4 flex flex-col gap-4 items-center">
         <slot/>
+        <input type="hidden" name="nextRoute" value={next}>
+        <input type="hidden" name={StorageKeys.SESSION_ID} value={$sessionID}>
+        <input type="hidden" name="questionID" value={questionID}>
         <div class="flex justify-end items-center">
             <span class="px-4 md:inline hidden text-white/40">Enter für weiter</span>
             <BigButton bind:disabled={disabled} type="submit">Weiter</BigButton>

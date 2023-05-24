@@ -5,8 +5,13 @@
     let options = ["männlich", "weiblich", "divers", "keine Angabe"]
     let questionText = "Welchem Geschlecht fühlen sie sich zugehörig?"
     let nextRoute = "/demographic/education"
+    const questionID = "gender"
 </script>
 
 <MiddleCard bg={false}>
-    <RadioQuestion {questionText} {options} {nextRoute} vertical={true}/>
+    <RadioQuestion {questionText}
+                   {options}
+                   {nextRoute}
+                   {questionID}
+                   vertical={true}/>
 </MiddleCard>

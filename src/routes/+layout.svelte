@@ -8,14 +8,31 @@
     import {AppBar, AppShell} from "@skeletonlabs/skeleton";
     import Footer from "$lib/Footer.svelte";
     import "iconify-icon"
+    import {onMount} from "svelte";
+    import {audioQuestions, sessionID as sessionIDStore} from "../store";
+    import {Fetcher} from "$lib/fetcher";
+
+
+    onMount(async () => {
+        console.log("Mount Layout")
+        const demographicPromise = Fetcher.demographicQuestions()
+        const sessionPromise = Fetcher.sessionID();
+        const audioPromise = Fetcher.audioQuestions()
+        await sessionPromise
+        await Promise.all([demographicPromise, audioPromise])
+        const urls = $audioQuestions.flatMap(quest => [quest.question.answer1Obj.audioURL, quest.question.answer2Obj.audioURL]) as string[];
+        const promises = urls.map(url => fetch(url))
+        await Promise.all([promises])
+    })
 </script>
 
+<pre>{JSON.stringify($sessionIDStore)}</pre>
 
 <AppShell>
     <svelte:fragment slot="header">
         <AppBar>ImageSchemata</AppBar>
     </svelte:fragment>
-    <slot />
+    <slot/>
     <svelte:fragment slot="footer">
         <Footer/>
     </svelte:fragment>

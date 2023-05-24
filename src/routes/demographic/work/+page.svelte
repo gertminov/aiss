@@ -5,8 +5,13 @@
     let options = ["Student", "Schüler", "Berufstätig", "Rentner"]
     let questionText = "Was beschreibt ihre momentane Tätigkeit"
     let nextRoute = "/demographic/age"
+    const questionID = "work"
 </script>
 
 <MiddleCard bg={false}>
-    <RadioQuestion {questionText} {options} {nextRoute} vertical={true}/>
+    <RadioQuestion {questionText}
+                   {options}
+                   {nextRoute}
+                   {questionID}
+                   vertical={true}/>
 </MiddleCard>

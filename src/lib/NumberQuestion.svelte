@@ -1,9 +1,9 @@
 <script lang="ts">
     import Question from "$lib/Question.svelte";
-    import {ne} from "drizzle-orm";
 
     export let text = "no Question Text Given"
     export let nextRoute
+    export let questionID:string
 
     let active
     function unlockButton(e) {
@@ -12,6 +12,6 @@
 
     }
 </script>
-<Question {text} {active} next={nextRoute}>
-    <input on:input={unlockButton} class="input" name="age" id="age" title="Input (number)" type="number"/>
+<Question {text} {active} next={nextRoute} {questionID}>
+    <input required on:input={unlockButton} class="input" name="answer" id="age" title="Input (number)" type="number"/>
 </Question>

@@ -6,16 +6,19 @@
     import type AnswerPair from "./data/AnswerPair";
     import {onDestroy, onMount} from "svelte";
     import AnswerOption from "$lib/AnswerOption.svelte";
-    import AudioResult from "$lib/data/AudioResult";
-    import {StorageKeys} from "$lib/data/storageKeys";
+    import {type AudioResultData} from "$lib/data/AudioResult";
     import type {AnswerOptionData, DndItem} from "$lib/data/AnswerOptionData";
+    import {audioResultsStore, sessionID} from "../store";
 
 
     // export let locked = true
-    export let setLocked = (state:boolean) => {""}
+    export let setLocked = (state: boolean) => {
+        ""
+    }
 
     export let data: QuestionAndAnswerData
-    let items: DndItem[] = data.answerOptions || [{id: 0, text: "error"}]
+    console.log(data)
+    let items: DndItem[] = data.options || [{id: "error", text: "error"}]
     let answers: AnswerPair = data.answers
     let answerOneItems: AnswerOptionData[]
     let answerOneOverflow: AnswerOptionData[] = []
@@ -38,7 +41,8 @@
     onMount(() => {
         startTime = new Date()
         // get stored Data from local storage
-        const localRes = JSON.parse(sessionStorage.getItem(StorageKeys.QUESTION + data.question.id)) as AudioResult
+        const localRes = $audioResultsStore["" + data.question.id]
+        // const localRes = JSON.parse(sessionStorage.getItem(StorageKeys.QUESTION + data.question.id)) as AudioResultData
         if (localRes) {
             // if an option is already set, put it int the D&D container
             if (localRes.choiceOne.option) answerOneItems = [localRes.choiceOne.option]
@@ -60,19 +64,21 @@
         console.log("time milli: " + time)
 
 
-        const res = new AudioResult(
+        const res: AudioResultData = {
             time,
-            data.question,
-            {
+            question: data.question,
+            choiceOne: {
                 audioAnswer: answers.one,
                 option: answerOneItems[0]
             },
-            {
+            choiceTwo: {
                 audioAnswer: answers.two,
                 option: answerTwoItems[0]
-            }
-        )
-        sessionStorage.setItem(StorageKeys.QUESTION + data.question.id, JSON.stringify(res))
+            },
+            sessionID: $sessionID
+        }
+
+        $audioResultsStore["" + res.question.id] = res
         console.log("Result:", res)
     })
 
