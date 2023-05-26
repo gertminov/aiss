@@ -4,7 +4,7 @@
 
     let options = ["Student", "Schüler", "Berufstätig", "Rentner"]
     let questionText = "Was beschreibt ihre momentane Tätigkeit"
-    let nextRoute = "/demographic/age"
+    let nextRoute = "/questions"
     const questionID = "work"
 </script>
 

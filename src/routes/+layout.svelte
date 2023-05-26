@@ -9,7 +9,7 @@
     import Footer from "$lib/Footer.svelte";
     import "iconify-icon"
     import {onMount} from "svelte";
-    import {audioQuestions, sessionID as sessionIDStore} from "../store";
+    import {audioQuestions} from "../store";
     import {Fetcher} from "$lib/fetcher";
 
 
@@ -26,7 +26,7 @@
     })
 </script>
 
-<pre>{JSON.stringify($sessionIDStore)}</pre>
+<!--<pre>{JSON.stringify($sessionIDStore)}</pre>-->
 
 <AppShell>
     <svelte:fragment slot="header">

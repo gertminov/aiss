@@ -32,7 +32,7 @@
         listenForEnter={true}
         {questionID}
 >
-    <RadioGroup display={orientation} rounded={rounded} class="w-1/3" spacing="space-y-4">
+    <RadioGroup display={orientation} rounded={rounded} class=" w-full max-w-xl" spacing="space-y-4">
         {#each options as option}
             <RadioItem bind:group={value} name="answer" value={option}>{option}</RadioItem>
         {/each}

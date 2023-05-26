@@ -4,7 +4,7 @@
 
     let options = ["Hauptschule", "Abitur", "Bachelor Studium", "Master Studium"]
     let questionText = "Was ist ihr höchster Bildungsabschluss"
-    let nextRoute = "/questions"
+    let nextRoute = "/demographic/work"
     const questionID = "education"
 </script>
 

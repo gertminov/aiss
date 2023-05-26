@@ -14,14 +14,14 @@
     export let items: AnswerOption[] = []
     export let overflow: AnswerOption[] = []
 
-    let progress: number = 0
+    let progress = 0
 
     let isPlaying = false
 
     let audioElement: HTMLAudioElement
     // Server does not know the audio element, so this has to be done client side
     if (browser) {
-        audioElement = new Audio(data.audioURL)
+        audioElement = new Audio(data.audioURL as string)
         audioElement.addEventListener("timeupdate", ()=>{
             updateProgress()
         })
@@ -88,7 +88,7 @@
         </div>
     </div>
 <!--    <p class="mx-6">{data.answerText}</p>-->
-    <div class=" border-2 border-secondary-500 w-20 h-10 rounded"
+    <div class=" border-2 border-secondary-500 w-60 h-10 rounded"
          use:dndzone={{items, dropTargetStyle}}
          on:consider={handleConsider}
          on:finalize={handleFinalize}

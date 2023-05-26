@@ -25,8 +25,24 @@ export class Fetcher {
         if (get(audioQuestions).length == 0) {
             const audioJson = await (await fetch("/api/questions/audio")).json() as AudioQuestionData[]
             const qAndA = audioJson.map(quest => new QuestionAndAnswerClass(quest))
-            audioQuestions.set(qAndA)
+            const shuffeled = this.shuffleArray(qAndA)
+            audioQuestions.set(shuffeled)
             console.log("got AudioQuestions")
         }
+    }
+
+    /**
+     * Shuffeles an array with the Fisher-Yates algorith
+     * @param array Input array
+     * @private
+     */
+    private static shuffleArray<T>(array: T[]) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            const temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+        }
+        return array
     }
 }
