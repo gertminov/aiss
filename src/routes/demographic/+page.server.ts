@@ -9,7 +9,7 @@ import {superValidate} from "sveltekit-superforms/server";
 const demographicSchema = z.object({
     answer: z.string().min(1),
     nextRoute: z.string().min(1),
-    sessionID: z.number(),
+    sessionID: z.number().positive("SessionID has to be Positive"),
     questionID: z.string().min(1)
 })
 
@@ -17,7 +17,7 @@ export const actions: Actions = {
     submit: async (event) => {
         const form = await superValidate(event, demographicSchema)
         if (!form.valid) {
-            throw error(501,"invalid form Data")
+            throw error(501,"invalid form Data" + form.errors)
         }
         const {answer, nextRoute, questionID, sessionID}=form.data;
 

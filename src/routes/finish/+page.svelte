@@ -1,7 +1,7 @@
 <script lang="ts">
     import {browser} from "$app/environment";
     import AudioResult from "$lib/data/AudioResult";
-    import {audioResultsStore, clearAllStores, sessionID} from "../../store";
+    import {audioResultsStore, clearAllStores} from "../../store";
     import type {NewAudioResultModel} from "$lib/data/AudioResult.js";
 
     if (browser) {

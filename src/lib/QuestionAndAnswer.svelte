@@ -113,7 +113,7 @@
 
 
 <div class="mx-2">
-    <p>{data.question.text}</p>
+    <p>{@html data.question.text}</p>
     <section use:dndzone={{items, dropTargetStyle}}
              on:consider={handleConsider}
              on:finalize={handleFinalize}

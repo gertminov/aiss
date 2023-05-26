@@ -21,7 +21,7 @@ export const AudioResultTable = pgTable(
     }
 )
 
-export type AudioResultModel = InferModel<typeof AudioResultTable>
+type AudioResultModel = InferModel<typeof AudioResultTable>
 export type NewAudioResultModel = InferModel<typeof AudioResultTable, 'insert'>
 
 export const insertAudioResultSchema = createInsertSchema(AudioResultTable)

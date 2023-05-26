@@ -1,6 +1,7 @@
 import {pgTable, text, varchar} from "drizzle-orm/pg-core";
 import {type AudioAnswerData, AudioAnswerTable} from "./AudioAnswerData";
 import type {InferModel} from "drizzle-orm";
+import AudioResult from "$lib/data/AudioResult";
 
 export const AudioQuestionTable = pgTable(
     "audio_question",
@@ -14,13 +15,14 @@ export const AudioQuestionTable = pgTable(
     }
 )
 
-export type AudioQuestionModel = InferModel<typeof AudioQuestionTable>
-export type NewAudioQuestionModel = InferModel<typeof AudioQuestionTable, "insert">
+type AudioQuestionModel = InferModel<typeof AudioQuestionTable>
+type NewAudioQuestionModel = InferModel<typeof AudioQuestionTable, "insert">
 
 export interface AudioQuestionData extends AudioQuestionModel {
     answer1Obj: AudioAnswerData
     answer2Obj: AudioAnswerData
 }
+
 export class AudioQuestion implements AudioQuestionData {
     public answer1ID
     public answer2ID
@@ -49,6 +51,35 @@ export class AudioQuestion implements AudioQuestionData {
             answer2,
             quesion.option1,
             quesion.option2
+        )
+    }
+
+    static generate(options: {
+        id?: string,
+        option1: string,
+        option2: string,
+        answer1: AudioAnswerData,
+        answer2: AudioAnswerData
+    }) {
+        const {id, option1, option2, answer1, answer2} = options
+
+        const questionText = `Welches Sample klingt <b>${option1.toLowerCase()}</b> und welches <b>${option2.toLowerCase()}</b>`
+
+        const baseURL = "https://pub-13948fdeb125422a88ab9aa10251729c.r2.dev/"
+
+        const genID = id || answer1.audioURL.split("/")[0]
+
+        answer1.audioURL = baseURL + answer1.audioURL
+        answer2.audioURL = baseURL + answer2.audioURL
+
+
+        return new AudioQuestion(
+            genID,
+            questionText,
+            answer1,
+            answer2,
+            option1,
+            option2
         )
     }
 
