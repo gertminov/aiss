@@ -14,11 +14,16 @@
     }
 </script>
 
-<div class="h-full w-full grid content-center ">
+<div class="h-full w-full grid content-center">
     <div class="flex justify-center">
-        <div class="card p-4 w-8/12">
-            <Stepper on:step={onStepHandler} on:complete={onCompleteHandler} >
-                <slot />
+        <div class="card p-4 md:w-8/12">
+            <Stepper on:step={onStepHandler}
+                     on:complete={onCompleteHandler}
+                     gap="gap-1 md:gap-2 lg:gap-4"
+                     badge="hidden md:inline variant-filled-surface"
+                     stepTerm="Frage"
+            >
+                <slot/>
             </Stepper>
         </div>
     </div>

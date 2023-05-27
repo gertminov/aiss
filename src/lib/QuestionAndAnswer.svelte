@@ -117,7 +117,7 @@
     <section use:dndzone={{items, dropTargetStyle}}
              on:consider={handleConsider}
              on:finalize={handleFinalize}
-             class="flex justify-around h-10  my-4 "
+             class="flex justify-around  md:h-10  my-4 "
     >
         {#each items as item(item.id)}
             <AnswerOption text={item.text}/>
