@@ -2,7 +2,7 @@ import {pgEnum, pgTable, text, varchar} from "drizzle-orm/pg-core";
 import type {InferModel} from "drizzle-orm";
 
 
-export const questionsType = pgEnum("questiontype", ["demographic", "default"])
+export const questionsType = pgEnum("questiontype", ["demographic", "default", "instrument"])
 export const QuestionsTable = pgTable(
     "questions",
     {

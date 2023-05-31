@@ -1,4 +1,4 @@
-import {audioQuestions, demographicQuestions, sessionID as sessionIDStore} from "../store";
+import {audioMetaphorQuestions, audioQuestions, demographicQuestions, sessionID as sessionIDStore} from "../store";
 import {get} from "svelte/store";
 import type {Question} from "$lib/data/Question";
 import type {AudioQuestionData} from "$lib/data/AudioQuestion";
@@ -23,12 +23,25 @@ export class Fetcher {
 
     static async audioQuestions() {
         if (get(audioQuestions).length == 0) {
-            const audioJson = await (await fetch("/api/questions/audio")).json() as AudioQuestionData[]
-            const qAndA = audioJson.map(quest => new QuestionAndAnswerClass(quest))
-            const shuffeled = this.shuffleArray(qAndA)
+            const shuffeled = await this.getAudioQuestions("scheme");
             audioQuestions.set(shuffeled)
             console.log("got AudioQuestions")
         }
+    }
+
+    static async audioMetaphorQuestions() {
+        if (get(audioMetaphorQuestions).length == 0) {
+            const shuffeled = await this.getAudioQuestions("metaphor")
+            audioMetaphorQuestions.set(shuffeled)
+            console.log("got MethaphorQuestions")
+        }
+    }
+
+    private static async getAudioQuestions(type: "scheme"|"metaphor") {
+        const audioJson = await (await fetch("/api/questions/audio?type="+type)).json() as AudioQuestionData[]
+        const qAndA = audioJson.map(quest => new QuestionAndAnswerClass(quest))
+        const shuffeled = this.shuffleArray(qAndA)
+        return shuffeled;
     }
 
     /**

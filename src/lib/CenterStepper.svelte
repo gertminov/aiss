@@ -3,14 +3,20 @@
     import {surveyProgress} from "../store.js";
     import {goto} from "$app/navigation";
 
+    export let nextRoute = "/finish"
+
     function onStepHandler(e: { detail: { step: number, state: { current: number, total: number } } }): void {
-        console.log("event:step", e.detail.state.current)
-        $surveyProgress = e.detail.state
+        if ($surveyProgress.localLast > e.detail.state.current) {
+            $surveyProgress.current = $surveyProgress.current - 1;
+        } else {
+            $surveyProgress.current = $surveyProgress.current +1
+        }
+        $surveyProgress.localLast = e.detail.state.current
     }
 
     function onCompleteHandler(e: Event) {
-        $surveyProgress = {total: 1, current: 1}
-        goto("/finish")
+        $surveyProgress.current ++
+        goto(nextRoute)
     }
 </script>
 

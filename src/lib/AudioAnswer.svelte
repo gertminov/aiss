@@ -69,7 +69,7 @@
         }
 
     }
-    const dropTargetStyle = {"border-color": "green"}
+    const dropTargetStyle = {"border-color": "#694CF2"}
 </script>
 
 <div class="flex items-center my-4 gap-4">
@@ -88,7 +88,7 @@
         </div>
     </div>
 <!--    <p class="mx-6">{data.answerText}</p>-->
-    <div class=" border-2 border-secondary-500 w-40 md:w-60 h-10 rounded"
+    <div class=" border-2 variant-ghost-surface w-40 md:w-60 h-10 rounded"
          use:dndzone={{items, dropTargetStyle}}
          on:consider={handleConsider}
          on:finalize={handleFinalize}

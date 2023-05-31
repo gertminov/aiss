@@ -15,11 +15,11 @@
 
     // go to next page when a value is selected
     let form: HTMLFormElement
-    $: {
-        if (active) {
-            form.requestSubmit()
-        }
-    }
+    // $: {
+    //     if (active) {
+    //         form.requestSubmit()
+    //     }
+    // }
 
 
 </script>

@@ -2,15 +2,15 @@
     import LockedStep from "$lib/LockedStep.svelte";
     import QuestionAndAnswer from "$lib/QuestionAndAnswer.svelte";
     import CenterStepper from "$lib/CenterStepper.svelte";
-    import {audioQuestions} from "../../store";
+    import {audioMetaphorQuestions} from "../../../store";
 
-    const data = $audioQuestions
+    const data = $audioMetaphorQuestions
 
 
 
 </script>
 
-<CenterStepper nextRoute="/questions/metaphors">
+<CenterStepper nextRoute="/end">
     {#each data as entry }
         <LockedStep  let:setLocked>
             <QuestionAndAnswer data={entry} {setLocked} />

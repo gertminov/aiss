@@ -4,17 +4,22 @@ import {AudioQuestion, AudioQuestionTable as questions} from "$lib/data/AudioQue
 import {AudioAnswerTable} from "$lib/data/AudioAnswerData";
 import {eq} from "drizzle-orm";
 import {alias} from "drizzle-orm/pg-core";
+import {z} from "zod";
 
-export const GET: RequestHandler = async ({request}) => {
-    console.log("getting audio Questions")
+export const GET: RequestHandler = async ({request, url}) => {
+    console.log(url.searchParams)
+    const type = url.searchParams.get("type")
+    const safeType = z.enum(["scheme", "metaphor"]).safeParse(type)
+    const questionType = safeType.success ? safeType.data : "scheme"
+
     try {
         const answer2 = alias(AudioAnswerTable, "answer2")
         const answer1 = alias(AudioAnswerTable, "answer1")
-        const res = await db.select().from(questions).leftJoin(answer1, eq(questions.answer1ID, answer1.id)).leftJoin(answer2, eq(questions.answer2ID, answer2.id))
+        const res = await db.select().from(questions).where(eq(questions.type, questionType)).leftJoin(answer1, eq(questions.answer1ID, answer1.id)).leftJoin(answer2, eq(questions.answer2ID, answer2.id))
         const audioquestions = res.map(row => {
             const {audio_question, answer1, answer2} = row
             if (audio_question && answer1 && answer2) {
-               return  AudioQuestion.fromDB(audio_question, answer1, answer2);
+                return AudioQuestion.fromDB(audio_question, answer1, answer2);
             } else {
                 throw error(500, "error while fetching audio Questions could not get everything for question: " + audio_question.id)
             }

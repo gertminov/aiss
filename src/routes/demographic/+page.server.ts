@@ -15,6 +15,7 @@ const demographicSchema = z.object({
 
 export const actions: Actions = {
     submit: async (event) => {
+        console.time("db")
         const form = await superValidate(event, demographicSchema)
         if (!form.valid) {
             throw error(501,"invalid form Data" + form.errors)
@@ -29,6 +30,7 @@ export const actions: Actions = {
 
         try {
             await db.insert(ResultTable).values(result)
+            console.timeEnd("db")
         } catch (e) {
             throw error(501, "error writing result to db")
         }

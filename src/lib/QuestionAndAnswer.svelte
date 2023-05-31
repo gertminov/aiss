@@ -17,7 +17,6 @@
     }
 
     export let data: QuestionAndAnswerData
-    console.log(data)
     let items: DndItem[] = data.options || [{id: "error", text: "error"}]
     let answers: AnswerPair = data.answers
     let answerOneItems: AnswerOptionData[]
@@ -61,7 +60,6 @@
         if (!startTime) return // I think it's a dev problem, but when the component is destroyed before its mounted the calculation does not work
         let endTime = new Date()
         const time = (endTime.getTime() - startTime.getTime())
-        console.log("time milli: " + time)
 
 
         const res: AudioResultData = {
@@ -79,7 +77,6 @@
         }
 
         $audioResultsStore["" + res.question.id] = res
-        console.log("Result:", res)
     })
 
 

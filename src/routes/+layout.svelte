@@ -1,6 +1,7 @@
 <script lang='ts'>
     // The ordering of these imports is critical to your app working properly
     import '@skeletonlabs/skeleton/themes/theme-skeleton.css';
+    // import "../theme.pcss"
     // If you have source.organizeImports set to true in VSCode, then it will auto change this ordering
     import '@skeletonlabs/skeleton/styles/skeleton.css';
     // Most of your app wide CSS should be put in this file
@@ -9,7 +10,7 @@
     import Footer from "$lib/Footer.svelte";
     import "iconify-icon"
     import {onMount} from "svelte";
-    import {audioQuestions} from "../store";
+    import {audioQuestions, setSessionTotal} from "../store";
     import {Fetcher} from "$lib/fetcher";
 
 
@@ -18,8 +19,10 @@
         const demographicPromise = Fetcher.demographicQuestions()
         const sessionPromise = Fetcher.sessionID();
         const audioPromise = Fetcher.audioQuestions()
+        const metaphorPromise = Fetcher.audioMetaphorQuestions()
         await sessionPromise
-        await Promise.all([demographicPromise, audioPromise])
+        await Promise.all([demographicPromise, audioPromise, metaphorPromise])
+        setSessionTotal()
         const urls = $audioQuestions.flatMap(quest => [quest.question.answer1Obj.audioURL, quest.question.answer2Obj.audioURL]) as string[];
         const promises = urls.map(url => fetch(url))
         await Promise.all([promises])

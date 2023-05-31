@@ -1,7 +1,12 @@
-import {pgTable, text, varchar} from "drizzle-orm/pg-core";
+import {pgEnum, pgTable, text, varchar} from "drizzle-orm/pg-core";
 import {type AudioAnswerData, AudioAnswerTable} from "./AudioAnswerData";
 import type {InferModel} from "drizzle-orm";
-import AudioResult from "$lib/data/AudioResult";
+
+
+export const audioQuestionType = pgEnum("audio_question_type", ["scheme", "metaphor"])
+
+
+
 
 export const AudioQuestionTable = pgTable(
     "audio_question",
@@ -12,15 +17,25 @@ export const AudioQuestionTable = pgTable(
         answer2ID: varchar('answer_2_id').references(() => AudioAnswerTable.id),
         option1: varchar('option_1').notNull(),
         option2: varchar('option_2').notNull(),
+        type: audioQuestionType('question_type').notNull().default("scheme")
     }
 )
 
 type AudioQuestionModel = InferModel<typeof AudioQuestionTable>
 type NewAudioQuestionModel = InferModel<typeof AudioQuestionTable, "insert">
 
-export interface AudioQuestionData extends AudioQuestionModel {
+export interface AudioQuestionData extends NewAudioQuestionModel {
     answer1Obj: AudioAnswerData
     answer2Obj: AudioAnswerData
+}
+
+type questionOptions = {
+    id?: string,
+    option1: string,
+    option2: string,
+    answer1: AudioAnswerData,
+    answer2: AudioAnswerData,
+    type?: "metaphor" | "scheme"
 }
 
 export class AudioQuestion implements AudioQuestionData {
@@ -33,7 +48,8 @@ export class AudioQuestion implements AudioQuestionData {
         public answer1Obj: AudioAnswerData,
         public answer2Obj: AudioAnswerData,
         public option1: string,
-        public option2: string
+        public option2: string,
+        public type?: "scheme" | "metaphor"
     ) {
         this.answer1ID = answer1Obj.id
         this.answer2ID = answer2Obj.id
@@ -54,14 +70,8 @@ export class AudioQuestion implements AudioQuestionData {
         )
     }
 
-    static generate(options: {
-        id?: string,
-        option1: string,
-        option2: string,
-        answer1: AudioAnswerData,
-        answer2: AudioAnswerData
-    }) {
-        const {id, option1, option2, answer1, answer2} = options
+    static generate(options: questionOptions) {
+        const {id, option1, option2, answer1, answer2, type} = options
 
         const questionText = `Welches Sample klingt <b>${option1.toLowerCase()}</b> und welches <b>${option2.toLowerCase()}</b>`
 
@@ -79,8 +89,27 @@ export class AudioQuestion implements AudioQuestionData {
             answer1,
             answer2,
             option1,
-            option2
+            option2,
+            type
         )
+    }
+
+    static generateWithMetaphors(options: questionOptions & { metaphors: { option1: string, option2: string }[]}){
+        const audioQuestion = this.generate(options);
+        const metaphorQuestions = options.metaphors.map(metaphor => {
+            console.log(options)
+            console.log("-------------")
+            const option: questionOptions = {
+                id: audioQuestion.id +"_" + metaphor.option1[0] + metaphor.option2[0],
+                option1: metaphor.option1,
+                option2: metaphor.option2,
+                answer1: {id: options.answer1.id, audioURL: options.answer1.audioURL},
+                answer2: {id: options.answer2.id, audioURL: options.answer2.audioURL},
+                type: "metaphor"
+            }
+            return this.generate(option)
+        });
+        return [audioQuestion, ...metaphorQuestions]
     }
 
 }
