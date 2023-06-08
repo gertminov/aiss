@@ -7,12 +7,12 @@
     <div class="grid grid-cols-3">
         <div class="pt-2 flex flex-col">
             <ol class="list">
-                <li>
-                    <span>1.</span>
+                <li class="relative">
+                    <span class="top-0 absolute">1.</span>
                     <span>Sie können sich pro Frage zwei Audiosequenzen anhören</span>
                 </li>
-                <li>
-                    <span>2.</span>
+                <li class="relative">
+                    <span class="absolute top-0">2.</span>
                     <span>
                         Ziehen Sie per drag & drop das Attribut, dass am besten passt auf den Kasten neben der entsprechenden Sequenz
                     </span>
