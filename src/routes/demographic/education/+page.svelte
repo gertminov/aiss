@@ -4,7 +4,7 @@
     import {onMount} from "svelte";
     import {surveyProgress} from "../../../store";
 
-    let options = ["Hauptschule", "Abitur", "Bachelor Studium", "Master Studium"]
+    let options = ["Kein Schulabschluss","Hauptschule", "Realschulabschluss","Abitur", "Ausbildung", "Bachelor Studium", "Master Studium", "Promotion"]
     let questionText = "Was ist ihr höchster Bildungsabschluss"
     let nextRoute = "/demographic/work"
     const questionID = "education"

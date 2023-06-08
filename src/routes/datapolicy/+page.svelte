@@ -12,13 +12,15 @@
 <MiddleCard>
     <h1 class="h1">Datenschutz</h1>
     <h3 class="h3">Welche Daten werden erhoben?</h3>
-    <ul class="list">
-        <li>Alter</li>
-        <li>Geschlecht</li>
-        <li>Bildungsabschluss</li>
-        <li>Beruf</li>
-        <li>Meinung zu gezeigten Audio samples</li>
-    </ul>
+    <div class="pl-4">
+        <ul class="list-dl list-disc">
+            <li>Alter</li>
+            <li>Geschlecht</li>
+            <li>Bildungsabschluss</li>
+            <li>Beruf</li>
+            <li>Meinung zu gezeigten Audio samples</li>
+        </ul>
+    </div>
     <p>
         Die Erhebung und Verarbeitung Ihrer oben beschriebenen persönlichen Daten erfolgt anonym. <br>
         Damit ist es niemandem möglich, die erhobenen Daten mit Ihnen in Verbindung zu bringen.<br>

@@ -1,10 +1,36 @@
 <script lang="ts">
+    import MiddleCard from "$lib/MiddleCard.svelte";
 </script>
 
-<div class="grid place-items-center h-full">
+<MiddleCard>
     <h1 class="h1">Bedienung der Fragen</h1>
-    <video autoplay loop controls muted class="object-fill w-3/5">
-        <source src="/tutorial.webm" type="video/webm">
-    </video>
-    <a href="/questions"  class="btn variant-filled-primary font-bold md:w-32 w-full">Weiter</a>
-</div>
+    <div class="grid grid-cols-3">
+        <div class="pt-2 flex flex-col">
+            <ol class="list">
+                <li>
+                    <span>1.</span>
+                    <span>Sie können sich pro Frage zwei Audiosequenzen anhören</span>
+                </li>
+                <li>
+                    <span>2.</span>
+                    <span>
+                        Ziehen Sie per drag & drop das Attribut, dass am besten passt auf den Kasten neben der entsprechenden Sequenz
+                    </span>
+                </li>
+            </ol>
+            <p class="pt-2">
+                Versuchen sie intuitiv ohne viel nachdenken zu entscheiden
+            </p>
+            <div class="h-full "></div>
+            <div class="flex justify-center p-8">
+                <a href="/questions" class="btn variant-filled-primary font-bold md:w-32 w-full">Weiter</a>
+            </div>
+        </div>
+        <div class="col-span-2">
+            <video autoplay loop controls muted class="object-fill w-full ">
+                <source src="/tutorial.webm" type="video/webm">
+            </video>
+        </div>
+    </div>
+</MiddleCard>
+
