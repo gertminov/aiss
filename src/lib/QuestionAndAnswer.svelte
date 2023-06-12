@@ -61,6 +61,9 @@
         let endTime = new Date()
         const time = (endTime.getTime() - startTime.getTime())
 
+        //complains about, that session id is a writable
+        //@ts-ignore
+        const id:number = $sessionID
 
         const res: AudioResultData = {
             time,
@@ -73,7 +76,7 @@
                 audioAnswer: answers.two,
                 option: answerTwoItems[0]
             },
-            sessionID: $sessionID
+            sessionID: id
         }
 
         $audioResultsStore["" + res.question.id] = res
@@ -106,11 +109,12 @@
     // const dropTargetStyle = {"border-color": "green"}
 
     const dropTargetStyle = {}
+    const rnd = Math.random()
 </script>
 
 
 <div class="mx-2">
-    <p>{@html data.question.text}</p>
+    <p class="pb-4 text-lg">{@html data.question.text}</p>
     <section use:dndzone={{items, dropTargetStyle}}
              on:consider={handleConsider}
              on:finalize={handleFinalize}
@@ -121,6 +125,13 @@
         {/each}
     </section>
     <div class="border-b border-white/10 my-2"></div>
-    <AudioAnswer data={answers.one} bind:items={answerOneItems} bind:overflow={answerOneOverflow}/>
-    <AudioAnswer data={answers.two} bind:items={answerTwoItems} bind:overflow={answerTwoOverflow}/>
+    <div class="flex flex-col items-center"><!--    Randomize order-->
+        {#if rnd > 0.5}
+            <AudioAnswer data={answers.one} bind:items={answerOneItems} bind:overflow={answerOneOverflow}/>
+            <AudioAnswer data={answers.two} bind:items={answerTwoItems} bind:overflow={answerTwoOverflow}/>
+        {:else }
+            <AudioAnswer data={answers.two} bind:items={answerTwoItems} bind:overflow={answerTwoOverflow}/>
+            <AudioAnswer data={answers.one} bind:items={answerOneItems} bind:overflow={answerOneOverflow}/>
+        {/if}
+    </div>
 </div>

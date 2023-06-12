@@ -4,8 +4,8 @@
 
 <MiddleCard>
     <h1 class="h1">Bedienung der Fragen</h1>
-    <div class="grid grid-cols-3">
-        <div class="pt-2 flex flex-col">
+    <div class="grid grid-cols-3 p-4">
+        <div class="pt-2 flex flex-col gap-4">
             <ol class="list">
                 <li class="relative">
                     <span class="top-0 absolute">1.</span>
@@ -22,7 +22,7 @@
                 Versuchen sie intuitiv ohne viel nachdenken zu entscheiden
             </p>
             <div class="h-full "></div>
-            <div class="flex justify-center p-8">
+            <div class="flex justify-center px-8">
                 <a href="/questions" class="btn variant-filled-primary font-bold md:w-32 w-full">Weiter</a>
             </div>
         </div>

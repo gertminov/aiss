@@ -18,13 +18,13 @@
 
 <MiddleCard>
     <header class="card-header">
-        <h1 class="h1">Willkommen bei der Studie</h1>
+        <h1 class="h1 text-center font-bold">Willkommen bei der Studie</h1>
     </header>
-    <section class="p-4 flex flex-col gap-8 divide-y">
+    <section class="p-4 px-12  flex flex-col gap-6 divide-y">
         {#each content as section}
-            <div class="border-b-0 border-surface-200-700-token pt-4">
-                <h2 class="h2 mb-4 ">{section.heading}</h2>
-                <p>{section.content}</p>
+            <div class=" border-surface-200-700-token pt-4 flex flex-col md:flex-row">
+                <h2 class="h2 mb-4 font-bold flex-1">{section.heading}</h2>
+                <p class="flex-1">{section.content}</p>
             </div>
 
         {/each}

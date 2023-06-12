@@ -69,7 +69,7 @@
         }
 
     }
-    const dropTargetStyle = {"border-color": "#694CF2"}
+    const dropTargetStyle = {"border-color": "#52cd83"}
 </script>
 
 <div class="flex items-center my-4 gap-4">
@@ -77,9 +77,9 @@
         <div class="h-full w-full absolute grid place-content-center z-10">
             <button on:click={playPause} class="grid place-content-center">
                 {#if isPlaying}
-                    <iconify-icon height="2em" icon="material-symbols:pause-rounded"></iconify-icon>
+                    <iconify-icon class="" height="2em" icon="material-symbols:pause-rounded"></iconify-icon>
                 {:else}
-                    <iconify-icon height="2em" icon="material-symbols:play-arrow-rounded"></iconify-icon>
+                    <iconify-icon class="" height="2em" icon="material-symbols:play-arrow-rounded"></iconify-icon>
                 {/if}
             </button>
         </div>

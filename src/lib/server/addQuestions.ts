@@ -4,7 +4,7 @@ import {db} from "$lib/server/drizzle";
 import {eq} from "drizzle-orm";
 import {AudioQuestionTable} from "$lib/data/AudioQuestion";
 import {AudioAnswerTable} from "$lib/data/AudioAnswerData";
-import {AudioQuestions} from "$lib/server/AudioQuestions";
+import {AudioQuestionsList} from "$lib/server/AudioQuestionsList";
 import {AudioResultTable} from "$lib/data/AudioResult";
 
 export async function addDemographicQuestions() {
@@ -44,7 +44,7 @@ export async function addAudioQuestions() {
     await db.delete(AudioQuestionTable)
     await db.delete(AudioAnswerTable)
 
-    const questions = AudioQuestions
+    const questions = AudioQuestionsList
     const answers = questions.map(quest => quest.getAnswers())
     const flatAnswers = answers.flat()
     await db.insert(AudioAnswerTable).values(flatAnswers).onConflictDoNothing()

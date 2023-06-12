@@ -41,6 +41,7 @@
 		"drizzle-zod": "^0.4.1",
 		"iconify-icon": "^1.0.7",
 		"pg": "^8.11.0",
+		"svelte-confetti": "^1.2.2",
 		"svelte-dnd-action": "^0.9.22",
 		"sveltekit-superforms": "^0.8.7",
 		"zod": "^3.21.4"

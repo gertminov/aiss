@@ -4,6 +4,7 @@
     import {goto} from "$app/navigation";
 
     export let nextRoute = "/finish"
+    export let completeName = "Fertig"
 
     function onStepHandler(e: { detail: { step: number, state: { current: number, total: number } } }): void {
         if ($surveyProgress.localLast > e.detail.state.current) {
@@ -28,6 +29,7 @@
                      gap="gap-1 md:gap-2 lg:gap-4"
                      badge="hidden md:inline variant-filled-surface"
                      stepTerm="Frage"
+                     buttonCompleteLabel={completeName}
             >
                 <slot/>
             </Stepper>

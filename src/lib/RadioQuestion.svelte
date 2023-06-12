@@ -34,7 +34,7 @@
 >
     <RadioGroup display={orientation} rounded={rounded} class=" w-full max-w-xl" spacing="space-y-4">
         {#each options as option}
-            <RadioItem bind:group={value} name="answer" value={option}>{option}</RadioItem>
+            <RadioItem bind:group={value} active="variant-filled-primary" name="answer" value={option}>{option}</RadioItem>
         {/each}
     </RadioGroup>
 </Question>
