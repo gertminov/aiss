@@ -2,7 +2,7 @@
     import MiddleCard from "$lib/MiddleCard.svelte";
 
     const content = [
-        {heading: "Inhalt", content: "Diese Studie befasst sich mit Auditiven Metaphern"},
+        {heading: "Inhalt", content: "Diese Studie befasst sich mit der Wahrnehmung von auditiven Image-Schemata"},
         {heading: "Ablauf", content: "Sie werden einen Fragebogen mit Audiosamples beantworten"},
         {heading: "Aufwandsentschädigung", content: "Die vollständige Teilnahme wird mit 1VPh vergütet"},
         {

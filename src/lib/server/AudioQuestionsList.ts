@@ -90,7 +90,7 @@ export const QuestionsWithMetaphors = [
         metaphors: [
             {id: "happy-sad", option1: "Traurig", option2: "Fröhlich"},
             {id: "problematic-unproblematic", option1: "Problematisch", option2: "Unproblematisch"},
-            {id: "complicated-simple", option1: "Problematisch", option2: "Unproblematisch"}
+            {id: "complicated-simple", option1: "Kompliziert", option2: "Unkompliziert"}
             // {id: "effort-no_effort", option1: "Beschwerlich", option2: "Unbeschwert"}
         ]
     }),
