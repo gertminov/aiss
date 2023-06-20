@@ -8,11 +8,11 @@ import {localStorageStore} from "@skeletonlabs/skeleton";
 export const surveyProgress = writable({total: 1, current: 0, localLast: -1})
 export const sessionID = localStorageStore("sessionID", -1, {storage: "session"})
 
-export const demographicQuestions: Writable<Question[]> = localStorageStore("demographicQuestions", [])
+export const demographicQuestions: Writable<Question[]> = localStorageStore("demographicQuestions", [], {storage: "session"})
 
 
-export const audioQuestions: Writable<QuestionAndAnswerData[]> = localStorageStore("audioQuestions", [])
-export const audioMetaphorQuestions: Writable<QuestionAndAnswerData[]> = localStorageStore("metaphorQuestions", [])
+export const audioQuestions: Writable<QuestionAndAnswerData[]> = localStorageStore("audioQuestions", [], {storage: "session"})
+export const audioMetaphorQuestions: Writable<QuestionAndAnswerData[]> = localStorageStore("metaphorQuestions", [], {storage: "session"})
 
 export const audioResultsStore: Writable<Record<string, AudioResultData>> = localStorageStore("audioResults", {}, {storage: "session"})
 

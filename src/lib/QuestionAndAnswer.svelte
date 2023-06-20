@@ -114,7 +114,7 @@
 
 
 <div class="mx-2">
-    <p class="pb-4 text-lg">{@html data.question.text}</p>
+    <p class="pb-4 text-lg  [&>b]:text-primary-500">{@html data.question.text}</p>
     <section use:dndzone={{items, dropTargetStyle}}
              on:consider={handleConsider}
              on:finalize={handleFinalize}

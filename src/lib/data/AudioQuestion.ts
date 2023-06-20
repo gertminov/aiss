@@ -27,7 +27,6 @@ type NewAudioQuestionModel = InferModel<typeof AudioQuestionTable, "insert">
 export interface AudioQuestionData extends NewAudioQuestionModel {
     answer1Obj: AudioAnswerData
     answer2Obj: AudioAnswerData
-    description: string
 }
 
 type questionOptions = {

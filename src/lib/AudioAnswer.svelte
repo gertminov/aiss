@@ -74,7 +74,7 @@
 
 <div class="flex items-center my-4 gap-4">
     <div class="relative">
-        <div class="h-full w-full absolute grid place-content-center z-10">
+        <div class="h-full w-full absolute grid place-content-center z-10 ">
             <button on:click={playPause} class="grid place-content-center">
                 {#if isPlaying}
                     <iconify-icon class="" height="2em" icon="material-symbols:pause-rounded"></iconify-icon>
@@ -84,7 +84,7 @@
             </button>
         </div>
         <div class="">
-            <ProgressRadial value="{progress}" width="w-12" stroke={120}/>
+            <ProgressRadial value="{progress}" width="w-12" stroke={120} meter="stroke-surface-50"  track="stroke-surface-400"/>
         </div>
     </div>
 <!--    <p class="mx-6">{data.answerText}</p>-->

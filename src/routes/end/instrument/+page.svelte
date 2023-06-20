@@ -42,7 +42,7 @@
 <MiddleCard>
     <h3 class="h3">Welche Instrumente spielen sie?</h3>
     <p class="text-surface-500-400-token">Auch Instrumente die nicht in der Liste sind können eingetragen werden</p>
-    <InputChip bind:input={inputChip} bind:value={inputChipList} name="chips" placeholder="Instrument eingeben ..."/>
+    <InputChip bind:input={inputChip} bind:value={inputChipList} name="chips" chips="variant-filled-primary" placeholder="Instrument eingeben ..."/>
     <div class="card w-full  max-h-48 overflow-y-auto">
         <Autocomplete
             bind:input={inputChip}

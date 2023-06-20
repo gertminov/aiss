@@ -17,7 +17,11 @@ export const QuestionsWithMetaphors = [
         desciption: "Big: Low pitch, high volume, reverb.\nSmall: High pitch, low volume, no reverb",
         metaphors: [
             {id: "much-little", option1: "Viel", option2: "Wenig"},
-            {id: "powerful-powerless", option1: "Kraftvoll", option2: "Kraftlos"}
+            {id: "powerful-powerless", option1: "Kraftvoll", option2: "Kraftlos"},
+            {id: "more-less", option1: "Mehr", option2: "Weniger"},
+            {id: "dominant-submissive", option1: "Dominant", option2: "Unterwürfig"},
+            {id: "creative-logic", option1: "Kreativ", option2: "Logisch"},
+            {id: "important-unimportant", option1: "Wichtig", option2: "Unwichtig"}
         ]
     }),
     AudioQuestion.generateWithMetaphors({
@@ -33,7 +37,8 @@ export const QuestionsWithMetaphors = [
         },
         desciption: "Bright: White Noise. lots of high frequencies.\nDark: Brown Noise, lots of low frequencies",
         metaphors: [
-            {id: "happy-sad", option1: "Fröhlich", option2: "Traurig"}
+            {id: "happy-sad", option1: "Fröhlich", option2: "Traurig"},
+            {id: "good-bad", option1: "Gut", option2: "Schlecht"},
         ]
     }),
     AudioQuestion.generateWithMetaphors({
@@ -65,9 +70,9 @@ export const QuestionsWithMetaphors = [
         },
         desciption: "Hard: Fast attack, fast decay, fast release.\nSoft: Slow attack, slow decay, slow release",
         metaphors: [
-            {id: "stressfull-relaxing", option1: "Stressig", option2: "Entspannt"},
+            {id: "stressful-relaxing", option1: "Stressig", option2: "Entspannt"},
             {id: "abrupt-continuous", option1: "Abrupt", option2: "Fortlaufend"},
-            {id: "peasant-unpleasant", option1: "Angenehm", option2: "Unangenehm"}
+            {id: "pleasant-unpleasant", option1: "Angenehm", option2: "Unangenehm"}
         ]
     }),
     AudioQuestion.generateWithMetaphors({
@@ -84,7 +89,9 @@ export const QuestionsWithMetaphors = [
         desciption: "Heavy: Low pitch sine wave hit.\nLight: High pitch pluck chord",
         metaphors: [
             {id: "happy-sad", option1: "Traurig", option2: "Fröhlich"},
-            {id: "effort-no_effort", option1: "Beschwerlich", option2: "Unbeschwert"}
+            {id: "problematic-unproblematic", option1: "Problematisch", option2: "Unproblematisch"},
+            {id: "complicated-simple", option1: "Problematisch", option2: "Unproblematisch"}
+            // {id: "effort-no_effort", option1: "Beschwerlich", option2: "Unbeschwert"}
         ]
     }),
     AudioQuestion.generateWithMetaphors({
@@ -105,7 +112,7 @@ export const QuestionsWithMetaphors = [
     }),
     AudioQuestion.generateWithMetaphors({
         option1: "Nah",
-        option2: "Entfernt",
+        option2: "Fern",
         answer1: {
             id: "far",
             audioURL: "near-far/nf-far.mp3"
@@ -122,7 +129,7 @@ export const QuestionsWithMetaphors = [
         nach: true
     }),
     AudioQuestion.generateWithMetaphors({
-        option1: "Weich",
+        option1: "Glatt",
         option2: "Rau",
         answer1: {
             id: "rough",
@@ -189,14 +196,10 @@ export const QuestionsWithMetaphors = [
         metaphors: [
             {id: "emotional-unemotional", option1: "Emotional", option2: "Emotionslos"},
             {id: "angry-calm", option1: "Wütend", option2: "Ruhig"},
-            {id: "red-blue", option1: "Blau", option2: "Rot"}
+            // {id: "red-blue", option1: "Blau", option2: "Rot"}
         ]
     }),
-
-
-]
-export const AudioQuestions = [
-    AudioQuestion.generate({
+    AudioQuestion.generateWithMetaphors({
         option1: "Zentral",
         option2: "Peripher",
         answer1: {
@@ -204,11 +207,18 @@ export const AudioQuestions = [
             audioURL: "center-perifery/diffuse_pan-mono/cp-center.mp3"
         },
         answer2: {
-            id: "perifery",
+            id: "periphery",
             audioURL: "center-perifery/diffuse_pan-mono/cp-perifery.mp3"
         },
-        desciption: "Center: Sine Pulse,Mono.\nPerifery: Sine Pulse, random panning, Reverb"
+        metaphors: [
+            {id: "important-unimportant", option1: "Wichtig", option2: "Unwichtig"}
+        ],
+        desciption: "Center: Sine Pulse,Mono.\nPeriphery: Sine Pulse, random panning, Reverb"
     }),
+
+
+]
+export const AudioQuestions = [
     AudioQuestion.generate({
         option1: "Langsam",
         option2: "Schnell",
@@ -223,7 +233,7 @@ export const AudioQuestions = [
         desciption: "Slow: Sine Pulse, 4th notes.\nFast: Sine Pulse, 16th notes"
     }),
     AudioQuestion.generate({
-        option1: "Zusammenkommend",
+        option1: "Vereinigen",
         option2: "Auseinandergehend",
         answer1: {
             id: "diverging",
@@ -233,7 +243,8 @@ export const AudioQuestions = [
             id: "merging",
             audioURL: "mathing-nonmatching/different-same-sound/mn-same-sine.mp3"
         },
-        desciption: "Merging: A+ Chrod, all notes a slightly (500ct) out of tune and get automated to be in tune.\nDiverging: A+ Chord all notes are in tune and slowly start to detune"
+        desciption: "Merging: A Chord, all notes a slightly (500ct) out of tune and get automated to be in tune.\nDiverging: A Chord all notes are in tune and slowly start to detune",
+        nach: true
     }),
     AudioQuestion.generate({
         option1: "Ganz",
