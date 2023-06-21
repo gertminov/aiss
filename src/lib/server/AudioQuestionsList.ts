@@ -99,11 +99,11 @@ export const QuestionsWithMetaphors = [
         option2: "Nicht Zusammengehörig",
         answer1: {
             id: "different",
-            audioURL: "mathing-nonmatching/different-same-sound/mn-difference.mp3"
+            audioURL: "matching-nonmatching/different-same-sound/mn-difference.mp3"
         },
         answer2: {
             id: "matching",
-            audioURL: "mathing-nonmatching/different-same-sound/mn-same-sine.mp3"
+            audioURL: "matching-nonmatching/different-same-sound/mn-same-sine.mp3"
         },
         desciption: "Matching: Same sine Pulse four times.\nNonMatching: Sine, Rhodes, Synth Flute, Saw, Saw Based Synth Bass",
         metaphors: [

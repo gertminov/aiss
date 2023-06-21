@@ -3,6 +3,7 @@ import type {Question} from "$lib/data/Question";
 import type QuestionAndAnswerData from "$lib/data/QuestionAndAnswerData";
 import type {AudioResultData} from "$lib/data/AudioResult";
 import {localStorageStore} from "@skeletonlabs/skeleton";
+import type {HearingResult} from "$lib/data/HearingResult";
 
 
 export const surveyProgress = writable({total: 1, current: 0, localLast: -1})
@@ -15,6 +16,9 @@ export const audioQuestions: Writable<QuestionAndAnswerData[]> = localStorageSto
 export const audioMetaphorQuestions: Writable<QuestionAndAnswerData[]> = localStorageStore("metaphorQuestions", [], {storage: "session"})
 
 export const audioResultsStore: Writable<Record<string, AudioResultData>> = localStorageStore("audioResults", {}, {storage: "session"})
+
+const emptyHearingResult = {volLeft: 0, volRight: 0, lowFreq: 0, highFreq: 0, sessionID: -1}
+export const hearingTestResultStore: Writable<HearingResult> = localStorageStore("hearingResults", {...emptyHearingResult} , {storage: "session"})
 
 
 export function setSessionTotal() {
@@ -31,4 +35,5 @@ export function clearAllStores() {
     demographicQuestions.set([])
     audioQuestions.set([])
     audioResultsStore.set({})
+    hearingTestResultStore.set({...emptyHearingResult})
 }

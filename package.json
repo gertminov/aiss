@@ -44,6 +44,7 @@
 		"svelte-confetti": "^1.2.2",
 		"svelte-dnd-action": "^0.9.22",
 		"sveltekit-superforms": "^0.8.7",
+		"tone": "^14.7.77",
 		"zod": "^3.21.4"
 	}
 }
