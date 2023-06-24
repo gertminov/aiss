@@ -2,9 +2,9 @@
     import MiddleCard from "$lib/MiddleCard.svelte";
 
     const content = [
-        {heading: "Inhalt", content: "Diese Studie befasst sich mit Auditiven Metaphern"},
-        {heading: "Ablauf", content: "Sie werden einen Fragebogen mit Audiosamples beantworten"},
-        {heading: "Aufwandsentschädigung", content: "Die vollständige Teilnahme wird mit 1VPh vergütet"},
+        {heading: "Inhalt", content: "Diese Studie befasst sich mit der Wahrnehmung von auditiven Image-Schemata"},
+        {heading: "Ablauf", content: "Sie werden Attribute zu Audiosequenzen zuordnen"},
+        {heading: "Aufwandsentschädigung", content: "Die vollständige Teilnahme wird mit 0.75 VPh vergütet"},
         {
             heading: "Freiwilligkeit",
             content: "Die Teilnahme an der Studie ist freiwillig. " +
@@ -30,6 +30,6 @@
         {/each}
     </section>
     <footer class="card-footer flex justify-center py-4">
-        <a href="datapolicy"  class="btn variant-filled-primary font-bold md:w-32 w-full">{ready}</a>
+        <a href="/demographic/age"  class="btn variant-filled-primary font-bold md:w-32 w-full">{ready}</a>
     </footer>
 </MiddleCard>

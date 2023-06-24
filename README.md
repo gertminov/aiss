@@ -1,18 +1,12 @@
-# create-svelte
+# Audio Image-Schemata Survey (AISS)
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+This is a survey tool to question people about image schemata
 
-## Creating a project
+## Inputting questions
 
-If you're seeing this, you've probably already done this step. Congrats!
+Ensure that `option1` matches `answer1` when inputting the data,
+so that the matchlist for data evaluation can be generated correctly
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
-```
 
 ## Developing
 

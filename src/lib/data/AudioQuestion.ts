@@ -6,8 +6,6 @@ import type {InferModel} from "drizzle-orm";
 export const audioQuestionType = pgEnum("audio_question_type", ["scheme", "metaphor"])
 
 
-
-
 export const AudioQuestionTable = pgTable(
     "audio_question",
     {
@@ -35,9 +33,15 @@ type questionOptions = {
     option2: string,
     answer1: AudioAnswerData,
     answer2: AudioAnswerData,
-    desciption: string,
+    description: string,
     type?: "metaphor" | "scheme",
     nach?: boolean
+}
+
+type metaphorAudioQuestion = questionOptions & {
+    metaphors: {
+        id: string, option1: string, option2: string
+    }[]
 }
 
 export class AudioQuestion implements AudioQuestionData {
@@ -77,9 +81,9 @@ export class AudioQuestion implements AudioQuestionData {
     }
 
     static generate(options: questionOptions) {
-        const {id, option1, option2, answer1, answer2,desciption, type, nach} = options
+        const {id, option1, option2, answer1, answer2, description, type, nach} = options
 
-        const questionText = `Welches Sample klingt ${nach? "nach": ""} <b>${option1.toLowerCase()}</b> und welches <b>${option2.toLowerCase()}</b>`
+        const questionText = `Welches Sample klingt ${nach ? "nach" : ""} <b>${option1.toLowerCase()}</b> und welches <b>${option2.toLowerCase()}</b>`
 
         const baseURL = "https://pub-13948fdeb125422a88ab9aa10251729c.r2.dev/"
 
@@ -92,16 +96,16 @@ export class AudioQuestion implements AudioQuestionData {
         return new AudioQuestion(
             genID,
             questionText,
-             newAnswer1,
+            newAnswer1,
             newAnswer2,
             option1,
             option2,
-            desciption,
+            description,
             type || "scheme"
         )
     }
 
-    static generateWithMetaphors(options: questionOptions & { metaphors: { id: string, option1: string, option2: string }[]}){
+    static generateWithMetaphors(options: metaphorAudioQuestion) {
         const audioQuestion = this.generate(options);
         const metaphorQuestions = options.metaphors.map(metaphor => {
             const option: questionOptions = {
@@ -110,12 +114,16 @@ export class AudioQuestion implements AudioQuestionData {
                 option2: metaphor.option2,
                 answer1: {id: options.answer1.id, audioURL: options.answer1.audioURL},
                 answer2: {id: options.answer2.id, audioURL: options.answer2.audioURL},
-                desciption: options.desciption,
+                description: options.description,
                 type: "metaphor"
             }
             return this.generate(option)
         });
         return [audioQuestion, ...metaphorQuestions]
+    }
+
+    static generateWithVariations() {
+
     }
 
 }
