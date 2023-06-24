@@ -35,7 +35,7 @@ type questionOptions = {
     option2: string,
     answer1: AudioAnswerData,
     answer2: AudioAnswerData,
-    desciption: string,
+    description: string,
     type?: "metaphor" | "scheme",
     nach?: boolean
 }
@@ -77,7 +77,7 @@ export class AudioQuestion implements AudioQuestionData {
     }
 
     static generate(options: questionOptions) {
-        const {id, option1, option2, answer1, answer2,desciption, type, nach} = options
+        const {id, option1, option2, answer1, answer2,description, type, nach} = options
 
         const questionText = `Welches Sample klingt ${nach? "nach": ""} <b>${option1.toLowerCase()}</b> und welches <b>${option2.toLowerCase()}</b>`
 
@@ -96,7 +96,7 @@ export class AudioQuestion implements AudioQuestionData {
             newAnswer2,
             option1,
             option2,
-            desciption,
+            description,
             type || "scheme"
         )
     }
@@ -110,7 +110,7 @@ export class AudioQuestion implements AudioQuestionData {
                 option2: metaphor.option2,
                 answer1: {id: options.answer1.id, audioURL: options.answer1.audioURL},
                 answer2: {id: options.answer2.id, audioURL: options.answer2.audioURL},
-                desciption: options.desciption,
+                description: options.description,
                 type: "metaphor"
             }
             return this.generate(option)

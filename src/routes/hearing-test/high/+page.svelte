@@ -6,15 +6,23 @@
 
     const toMartin = getContext("isMartin")
 
-    const nextPage = toMartin ? "https://URLZUMARTING.com": "/"
+    let nextPage = "/"
+
+    if (toMartin === "image") {
+        nextPage = "https://audiometapher.limesurvey.net/255898?lang=de-easy"
+    } else if (toMartin === "metaphor") {
+        nextPage = "https://audiometapher.limesurvey.net/2?lang=de-easy"
+    }
+
 
     let active = false
+
     async function writeToStore(e) {
         active = true
         console.log(e.detail.value)
         $hearingTestResultStore.highFreq = Math.round(e.detail.value)
         $hearingTestResultStore.sessionID = $sessionID
-        await fetch("/api/hearing-test",{
+        await fetch("/api/hearing-test", {
             method: "POST",
             body: JSON.stringify($hearingTestResultStore)
         })

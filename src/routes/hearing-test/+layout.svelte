@@ -2,11 +2,14 @@
     import MiddleCard from "$lib/MiddleCard.svelte";
     import {setContext} from "svelte";
     import {page} from "$app/stores";
+
     const toMartin = $page.url.searchParams.get("martin")
-    if (toMartin) {
-        setContext("isMartin", true);
+    if (toMartin === "metaphor") {
+        setContext("isMartin", "metaphor");
+    } else if (toMartin === "image") {
+        setContext("isMarting", "image")
     } else {
-        setContext("isMartin", false)
+        setContext("isMartin", undefined)
     }
 </script>
 
@@ -16,7 +19,9 @@
             <h3 class="h2 pb-2">Anleitung</h3>
             <ol class="list-decimal">
                 <li>Drücken Sie die <span class="font-bold text-primary-500">Leertaste</span> zum Starten</li>
-                <li>Drücken Sie die <span class="font-bold text-primary-500">Leertaste</span> erneut sobalt Sie einen Ton hören</li>
+                <li>Drücken Sie die <span class="font-bold text-primary-500">Leertaste</span> erneut sobalt Sie einen
+                    Ton hören
+                </li>
             </ol>
         </div>
 

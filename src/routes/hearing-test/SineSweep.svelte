@@ -10,7 +10,6 @@
     const startFreq = direction == "up" ? "20Hz" : "20000Hz"
     const endFreq = direction == "up" ? "20000Hz" : "20Hz"
 
-    let osc
     let synth: Tone.Synth
     let playing = false
 

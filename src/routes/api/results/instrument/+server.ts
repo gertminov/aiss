@@ -6,7 +6,7 @@ import {ResultTable} from "$lib/data/Result";
 
 const instrumentSchema = z.object({
     sessionID: z.number(),
-    instruments: z.array(z.string())
+    timePlaying: z.number()
 })
 
 export const POST: RequestHandler = async event =>{
@@ -20,8 +20,8 @@ export const POST: RequestHandler = async event =>{
 
     const res: NewResult = {
         sessionID: safeJson.data.sessionID,
-        answer: safeJson.data.instruments.join(","),
-        questionID: "instruments"
+        answer: safeJson.data.timePlaying.toString(),
+        questionID: "timePlaying"
     }
     try {
         await db.insert(ResultTable).values(res)
