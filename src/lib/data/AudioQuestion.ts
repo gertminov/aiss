@@ -1,6 +1,7 @@
 import {pgEnum, pgTable, text, varchar} from "drizzle-orm/pg-core";
 import {type AudioAnswerData, AudioAnswerTable} from "./AudioAnswerData";
 import type {InferModel} from "drizzle-orm";
+import {string} from "zod";
 
 
 export const audioQuestionType = pgEnum("audio_question_type", ["scheme", "metaphor"])
@@ -22,6 +23,23 @@ export const AudioQuestionTable = pgTable(
 type AudioQuestionModel = InferModel<typeof AudioQuestionTable>
 type NewAudioQuestionModel = InferModel<typeof AudioQuestionTable, "insert">
 
+
+type AnswerData = {
+    id: string,
+    urls: []
+}
+
+type AnswerOptions = {
+    option1: string, option2: string
+}
+
+type Answer = {
+    id1: string,
+    options: AnswerOptions[],
+    id2: string
+
+}
+
 export interface AudioQuestionData extends NewAudioQuestionModel {
     answer1Obj: AudioAnswerData
     answer2Obj: AudioAnswerData
@@ -41,6 +59,12 @@ type questionOptions = {
 type metaphorAudioQuestion = questionOptions & {
     metaphors: {
         id: string, option1: string, option2: string
+    }[]
+}
+
+type variantMetaphorAudioQuestion = metaphorAudioQuestion & {
+    variants: {
+        answerURL1: string, answerURL2: string, description: string
     }[]
 }
 
@@ -122,7 +146,28 @@ export class AudioQuestion implements AudioQuestionData {
         return [audioQuestion, ...metaphorQuestions]
     }
 
-    static generateWithVariations() {
+    static generateWithVariations(options: variantMetaphorAudioQuestion) {
+        const question = this.generate(options)
+        const variants = options.variants.map(variant => {
+            const urlParts = variant.answerURL1.split("/")
+            const variantName = urlParts[urlParts.length - 2]
+            const id = question.id + ":" + variantName
+            const variantOptions:questionOptions = {
+                id: id,
+                answer1: {id: options.answer1.id + ":" + variantName, audioURL: variant.answerURL1},
+                answer2: {id: options.answer2.id + ":" + variantName, audioURL: variant.answerURL2},
+                option1: options.option1,
+                option2: options.option2,
+                description: variant.description,
+                type: options.type,
+                nach: options.nach
+            }
+            return this.generate(variantOptions)
+        })
+
+        const metaphors = this.generateWithMetaphors(options)
+
+        return [ ...variants, ...metaphors]
 
     }
 

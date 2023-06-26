@@ -2,7 +2,7 @@ import {AudioQuestion} from "$lib/data/AudioQuestion";
 
 
 export const QuestionsWithMetaphors = [
-    AudioQuestion.generateWithMetaphors({
+    AudioQuestion.generateWithVariations({
         id: "big_small",
         option1: "Groß",
         option2: "Klein",
@@ -22,9 +22,16 @@ export const QuestionsWithMetaphors = [
             {id: "dominant-submissive", option1: "Dominant", option2: "Unterwürfig"},
             {id: "creative-logic", option1: "Kreativ", option2: "Logisch"},
             {id: "important-unimportant", option1: "Wichtig", option2: "Unwichtig"}
+        ],
+        variants: [
+            {
+                answerURL1: "big-small/low-high/bs-big.mp3",
+                answerURL2: "big-small/low-high/bs-small.mp3",
+                description: "Big: Low pitch sine tone.\n Small: High pitch sine pulse."
+            }
         ]
     }),
-    AudioQuestion.generateWithMetaphors({
+    AudioQuestion.generateWithVariations({
         option1: "Hell",
         option2: "Dunkel",
         answer1: {
@@ -39,6 +46,13 @@ export const QuestionsWithMetaphors = [
         metaphors: [
             {id: "happy-sad", option1: "Fröhlich", option2: "Traurig"},
             {id: "good-bad", option1: "Gut", option2: "Schlecht"},
+        ],
+        variants: [
+            {
+                answerURL1: "bright-dark/harmonic-high-cut/bd-bright.mp3",
+                answerURL2: "bright-dark/harmonic-high-cut/bd-dark.mp3",
+                description: "Bright: Major chord, sawtooth waves, boosted high frequencies.\nDark: Minor chord, sawtooth waves, lowered high frequencies"
+            }
         ]
     }),
     AudioQuestion.generateWithMetaphors({
@@ -68,14 +82,14 @@ export const QuestionsWithMetaphors = [
             id: "soft",
             audioURL: "hard-soft/fast-slow-adsr/hs-soft.mp3"
         },
-        description: "Hard: Fast attack, fast decay, fast release.\nSoft: Slow attack, slow decay, slow release",
+        description: "Hard: Fast attack, fast decay, fast release, 1/8th note pulse.\nSoft: Slow attack, slow decay, slow release, 1 bar chords",
         metaphors: [
             {id: "stressful-relaxing", option1: "Stressig", option2: "Entspannt"},
             {id: "abrupt-continuous", option1: "Abrupt", option2: "Fortlaufend"},
             {id: "pleasant-unpleasant", option1: "Unangenehm", option2: "Angenehm"}
         ]
     }),
-    AudioQuestion.generateWithMetaphors({
+    AudioQuestion.generateWithVariations({
         option1: "Schwer",
         option2: "Leicht",
         answer1: {
@@ -92,9 +106,16 @@ export const QuestionsWithMetaphors = [
             {id: "problematic-unproblematic", option1: "Problematisch", option2: "Unproblematisch"},
             {id: "complicated-simple", option1: "Kompliziert", option2: "Unkompliziert"}
             // {id: "effort-no_effort", option1: "Beschwerlich", option2: "Unbeschwert"}
+        ],
+        variants: [
+            {
+                answerURL1: "heavy-light/fast-slow/hl-heavy.mp3",
+                answerURL2: "heavy-light/fast-slow/hl-light.mp3",
+                description: "Heavy: Low pitch 1/4th notes.\nLight: High pitch 1/8th notes"
+            }
         ]
     }),
-    AudioQuestion.generateWithMetaphors({
+    AudioQuestion.generateWithVariations({
         option1: "Zusammengehörig",
         option2: "Nicht Zusammengehörig",
         answer1: {
@@ -105,9 +126,22 @@ export const QuestionsWithMetaphors = [
             id: "different",
             audioURL: "matching-nonmatching/different-same-sound/mn-difference.mp3"
         },
-        description: "Matching: Same sine Pulse four times.\nNonMatching: Sine, Rhodes, Synth Flute, Saw, Saw Based Synth Bass",
+        description: "Matching: Same sine Pulse four times.\nDifferent: Sine, Rhodes, Synth Flute, Saw, Saw Based Synth Bass",
         metaphors: [
             {id: "excited-calm", option1: "Ruhig", option2: "Aufgeregt"}
+        ],
+        variants: [
+            {
+                answerURL1: "matching-nonmatching/harmonic-disharmonic/mn-matching.mp3",
+                answerURL2: "matching-nonmatching/harmonic-disharmonic/mn-non-matching.mp3",
+                description: "Matching: Base note and A chord arpeggio.\nDifferent: Base note and random notes not in the same key on top."
+            },
+            {
+                answerURL1: "matching-nonmatching/repetition/mn-repetition.mp3",
+                answerURL2: "matching-nonmatching/repetition/mn-difference.mp3",
+                description: "Matching: The same chord sequence twice.\nDifferent: Two different chord sequences in different keys."
+            }
+
         ]
     }),
     AudioQuestion.generateWithMetaphors({
@@ -128,7 +162,7 @@ export const QuestionsWithMetaphors = [
         ],
         nach: true
     }),
-    AudioQuestion.generateWithMetaphors({
+    AudioQuestion.generateWithVariations({
         option1: "Glatt",
         option2: "Rau",
         answer1: {
@@ -137,13 +171,20 @@ export const QuestionsWithMetaphors = [
         },
         answer2: {
             id: "rough",
-            audioURL: "smooth-rough/smooth-chopped/sr-rough.mp3"
+            audioURL: "smooth-rough/smooth-chopped/sr-rough-dist.mp3"
         },
         description: "Smooth: Simple smooth chrods,.\nRough: complex jumpy melody, derived from the smooth Melo. using Abletons Warp feature in beat mode, adding distortion and boosting the Transients",
         metaphors: [
             {id: "boring-dangerous", option1: "Langweilig", option2: "Gefährlich"},
             {id: "problematic-unproblematic", option1: "Unproblematisch", option2: "Problematisch"},
             {id: "pleasant-unpleasant", option1: "Angenehm", option2: "Unangenehm"}
+        ],
+        variants: [
+            {
+                answerURL1: "smooth-rough/sine-distord/sr-rough.mp3",
+                answerURL2: "smooth-rough/sine-distord/sr-smooth.mp3",
+                description: "Smooth: Sine pulse. Rough: Heavily distorted saw pulse"
+            }
         ]
     }),
     AudioQuestion.generateWithMetaphors({
@@ -199,7 +240,7 @@ export const QuestionsWithMetaphors = [
             // {id: "red-blue", option1: "Blau", option2: "Rot"}
         ]
     }),
-    AudioQuestion.generateWithMetaphors({
+    AudioQuestion.generateWithVariations({
         option1: "Zentral",
         option2: "Peripher",
         answer1: {
@@ -213,8 +254,15 @@ export const QuestionsWithMetaphors = [
         metaphors: [
             {id: "important-unimportant", option1: "Wichtig", option2: "Unwichtig"}
         ],
-        description: "Center: Sine Pulse,Mono.\nPeriphery: Sine Pulse, random panning, Reverb"
-    }),
+        description: "Center: Sine pulse,mono.\nPeriphery: Sine pulse, random panning, Reverb",
+        variants: [
+            {
+                answerURL1:"center-perifery/random-mono/cp-center-mono.mp3",
+                answerURL2: "center-perifery/random-mono/cp-perifery-random_pan.mp3",
+                description: "Center: Sine pulse, mono.\nPeriphery: Sine pulse, random panning"
+            }
+        ]
+    })
 
 
 ]
@@ -257,13 +305,13 @@ export const AudioQuestions = [
             id: "whole",
             audioURL: "part-whole/ph-whole.mp3"
         },
-        description: "Part: Melody, Bass and Chrods played after each other.\nWhole: Melody, Bass and Chords played at the same Time"
+        description: "Part: Melody, Bass and Drums played after each other.\nWhole: Melody, Bass and Drums played at the same Time"
     }),
 ]
 
 const TutorialQuestion: AudioQuestion = AudioQuestion.generate({
-    answer1: {id: "wavy", audioURL: "part-whole/ph-whole.mp3"  },
-    answer2: {id: "spicky", audioURL:"part-whole/ph-whole.mp3" },
+    answer1: {id: "wavy", audioURL: "part-whole/ph-whole.mp3"},
+    answer2: {id: "spicky", audioURL: "part-whole/ph-whole.mp3"},
     option1: "Gewellt",
     option2: "Gezackt",
     description: "noope"
