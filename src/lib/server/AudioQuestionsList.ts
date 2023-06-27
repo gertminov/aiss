@@ -10,7 +10,7 @@ export const QuestionsWithMetaphors = [
         metaphors: [
             {id: "much-little", big: "Viel", small: "Wenig"},
             {id: "powerful-powerless", big: "Kraftvoll", small: "Kraftlos"},
-            {id: "more-less", big: "Mehr", small: "Weniger"},
+            // {id: "more-less", big: "Mehr", small: "Weniger"},
             {id: "dominant-submissive", big: "Dominant", small: "Unterwürfig"},
             {id: "creative-logic", big: "Kreativ", small: "Logisch"},
             {id: "important-unimportant", big: "Wichtig", small: "Unwichtig"}
@@ -38,11 +38,11 @@ export const QuestionsWithMetaphors = [
             {id: "good-bad", bright: "Gut", dark: "Schlecht"},
         ],
         audios: [
-            {
-                bright: "birght-dark-noise/bd-bright-noise",
-                dark: "birght-dark-noise/bd-dark-noise",
-                description: "Bright: White Noise. lots of high frequencies.\nDark: Brown Noise, lots of low frequencies"
-            },
+            // {
+            //     bright: "birght-dark-noise/bd-bright-noise",
+            //     dark: "birght-dark-noise/bd-dark-noise",
+            //     description: "Bright: White Noise. lots of high frequencies.\nDark: Brown Noise, lots of low frequencies"
+            // },
             {
                 bright: "harmonic-high-cut/bd-bright",
                 dark: "harmonic-high-cut/bd-dark",
@@ -119,11 +119,6 @@ export const QuestionsWithMetaphors = [
                 description: "Matching: Same sine Pulse four times.\nDifferent: Sine, Rhodes, Synth Flute, Saw, Saw Based Synth Bass"
             },
             {
-                matching: "harmonic-disharmonic/mn-matching",
-                different: "harmonic-disharmonic/mn-non-matching",
-                description: "Matching: Base note and A chord arpeggio.\nDifferent: Base note and random notes not in the same key on top."
-            },
-            {
                 matching: "repetition/mn-repetition",
                 different: "repetition/mn-difference",
                 description: "Matching: The same chord sequence twice.\nDifferent: Two different chord sequences in different keys."
@@ -146,7 +141,7 @@ export const QuestionsWithMetaphors = [
     AudioQuestion.generate("smooth", "rough", {
         schema: {smooth: "Glatt", rough: "Rau"},
         metaphors: [
-            {id: "boring-dangerous", smooth: "Langweilig", rough: "Gefährlich"},
+            {id: "safe-dangerous", smooth: "Sicher", rough: "Gefährlich"},
             {id: "problematic-unproblematic", smooth: "Unproblematisch", rough: "Problematisch"},
             {id: "pleasant-unpleasant", smooth: "Angenehm", rough: "Unangenehm"}
         ],
