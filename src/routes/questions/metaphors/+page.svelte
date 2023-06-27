@@ -6,11 +6,13 @@
 
     const data = $audioMetaphorQuestions
 
+    const tooManySteps = data.length > 25
+
 
 
 </script>
 
-<CenterStepper nextRoute="/end">
+<CenterStepper nextRoute="/end" {tooManySteps}>
     {#each data as entry }
         <LockedStep  let:setLocked>
             <QuestionAndAnswer data={entry} {setLocked} />
