@@ -23,50 +23,38 @@ export const AudioQuestionTable = pgTable(
 type AudioQuestionModel = InferModel<typeof AudioQuestionTable>
 type NewAudioQuestionModel = InferModel<typeof AudioQuestionTable, "insert">
 
+const baseAudioURL = "https://pub-13948fdeb125422a88ab9aa10251729c.r2.dev/"
 
-type AnswerData = {
-    id: string,
-    urls: []
-}
-
-type AnswerOptions = {
-    option1: string, option2: string
-}
-
-type Answer = {
-    id1: string,
-    options: AnswerOptions[],
-    id2: string
-
-}
 
 export interface AudioQuestionData extends NewAudioQuestionModel {
     answer1Obj: AudioAnswerData
     answer2Obj: AudioAnswerData
 }
 
-type questionOptions = {
-    id?: string,
-    option1: string,
-    option2: string,
-    answer1: AudioAnswerData,
-    answer2: AudioAnswerData,
-    description: string,
-    type?: "metaphor" | "scheme",
+
+type questionSchema<ID1 extends string, ID2 extends string> = {
+    schema: Record<ID1 | ID2, string>
+    metaphors: {
+        [answers in ID1 | ID2 | "id"]: string
+    }[],
+    audios: { [answer in ID1 | ID2 | "description"]: string }[],
     nach?: boolean
 }
 
-type metaphorAudioQuestion = questionOptions & {
-    metaphors: {
-        id: string, option1: string, option2: string
-    }[]
+type questionConfig = {
+    id: string,
+    answerOption1: string,
+    answerOption2: string,
+    answer1: {
+        audioURL: string,
+        id: string
+    },
+    answer2: { audioURL: string, id: string },
+    description: string,
+    type: "scheme" | "metaphor",
+    nach: boolean
 }
 
-type variantMetaphorAudioQuestion = metaphorAudioQuestion & {
-    variants: {
-        answerURL1: string, answerURL2: string, description: string
-    }[]
-}
 
 export class AudioQuestion implements AudioQuestionData {
     public answer1ID
@@ -104,71 +92,101 @@ export class AudioQuestion implements AudioQuestionData {
         )
     }
 
-    static generate(options: questionOptions) {
-        const {id, option1, option2, answer1, answer2, description, type, nach} = options
+    // static generate(options: questionConfig) {
+    //     const {id, answerOption1, answerOption2, answer1, answer2, description, type, nach} = options
+    //
+    //     const questionText = `Welches Sample klingt ${nach ? "nach" : ""} <b>${answerOption1.toLowerCase()}</b> und welches <b>${answerOption2.toLowerCase()}</b>`
+    //
+    //     const baseURL = "https://pub-13948fdeb125422a88ab9aa10251729c.r2.dev/"
+    //
+    //     const genID = id || answer1.audioURL.split("/")[0]
+    //
+    //     const newAnswer1 = {id: answer1.id, audioURL: baseURL + answer1.audioURL}
+    //     const newAnswer2 = {id: answer2.id, audioURL: baseURL + answer2.audioURL}
+    //
+    //
+    //     return new AudioQuestion(
+    //         genID,
+    //         questionText,
+    //         newAnswer1,
+    //         newAnswer2,
+    //         option1,
+    //         option2,
+    //         description,
+    //         type || "scheme"
+    //     )
+    // }
 
-        const questionText = `Welches Sample klingt ${nach ? "nach" : ""} <b>${option1.toLowerCase()}</b> und welches <b>${option2.toLowerCase()}</b>`
+    static generate<ID1 extends string, ID2 extends string>(id1: ID1, id2: ID2, options: questionSchema<ID1, ID2>) {
+        const id = `${id1}-${id2}`
+        const answerOptions = options.audios.map(pair => ({
+            id: this.getID(id, pair[id1]),
+            audio1: {
+                audioURL: this.buildAudioURL(id, pair[id1]),
+                id: this.getID(id1, pair[id1])
+            },
+            audio2: {
+                audioURL: this.buildAudioURL(id, pair[id2]),
+                id: this.getID(id2, pair[id2])
+            },
+            description: pair.description,
+        }))
 
-        const baseURL = "https://pub-13948fdeb125422a88ab9aa10251729c.r2.dev/"
+        const schemas: questionConfig[] = answerOptions.map(option => ({
+            id: option.id,
+            answerOption1: options.schema[id1],
+            answerOption2: options.schema[id2],
+            answer1: {...option.audio1},
+            answer2: {...option.audio2},
+            description: option.description,
+            type: "scheme",
+            nach: options.nach || false
+        }))
 
-        const genID = id || answer1.audioURL.split("/")[0]
-
-        const newAnswer1 = {id: answer1.id, audioURL: baseURL + answer1.audioURL}
-        const newAnswer2 = {id: answer2.id, audioURL: baseURL + answer2.audioURL}
-
-
-        return new AudioQuestion(
-            genID,
-            questionText,
-            newAnswer1,
-            newAnswer2,
-            option1,
-            option2,
-            description,
-            type || "scheme"
-        )
-    }
-
-    static generateWithMetaphors(options: metaphorAudioQuestion) {
-        const audioQuestion = this.generate(options);
-        const metaphorQuestions = options.metaphors.map(metaphor => {
-            const option: questionOptions = {
-                id: metaphor.id,
-                option1: metaphor.option1,
-                option2: metaphor.option2,
-                answer1: {id: options.answer1.id, audioURL: options.answer1.audioURL},
-                answer2: {id: options.answer2.id, audioURL: options.answer2.audioURL},
-                description: options.description,
-                type: "metaphor"
-            }
-            return this.generate(option)
-        });
-        return [audioQuestion, ...metaphorQuestions]
-    }
-
-    static generateWithVariations(options: variantMetaphorAudioQuestion) {
-        const question = this.generate(options)
-        const variants = options.variants.map(variant => {
-            const urlParts = variant.answerURL1.split("/")
-            const variantName = urlParts[urlParts.length - 2]
-            const id = question.id + ":" + variantName
-            const variantOptions:questionOptions = {
-                id: id,
-                answer1: {id: options.answer1.id + ":" + variantName, audioURL: variant.answerURL1},
-                answer2: {id: options.answer2.id + ":" + variantName, audioURL: variant.answerURL2},
-                option1: options.option1,
-                option2: options.option2,
-                description: variant.description,
-                type: options.type,
-                nach: options.nach
-            }
-            return this.generate(variantOptions)
+        const metaphors: questionConfig[] = answerOptions.flatMap(option => {
+            const split = option.id.split(":")
+            const secondIDPart = split[1] ||  ""
+            return options.metaphors.map(metaphor => ({
+                id: metaphor.id + ":" + secondIDPart,
+                answerOption1: metaphor[id1],
+                answerOption2: metaphor[id2],
+                answer1: {...option.audio1},
+                answer2: {...option.audio2},
+                description: option.description,
+                type: "metaphor",
+                nach: options.nach || false
+            }))
         })
 
-        const metaphors = this.generateWithMetaphors(options)
+        return [...schemas, ...metaphors].map(q => {
+            const questionText = `Welches Sample klingt ${q.nach ? "nach" : ""} <b>${q.answerOption1.toLowerCase()}</b> und welches <b>${q.answerOption2.toLowerCase()}</b>`
+            return new AudioQuestion(
+                q.id,
+                questionText,
+                q.answer1,
+                q.answer2,
+                q.answerOption1,
+                q.answerOption2,
+                q.description,
+                q.type
+            )
+        })
+    }
 
-        return [ ...variants, ...metaphors]
 
+    static getID(id: string, url: string) {
+        const urlParts = url.split("/")
+        if (urlParts.length == 1) {
+            return id
+        } else {
+            return id + ":" + urlParts[0]
+        }
+    }
+
+
+    static buildAudioURL(category: string, url: string) {
+        const firstPart = baseAudioURL  + category + "/"
+        return url.endsWith(".mp3") ? firstPart + url : firstPart + url + ".mp3";
     }
 
 }

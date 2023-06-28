@@ -10,7 +10,7 @@
 
 </script>
 
-<CenterStepper nextRoute="/questions/metaphors" completeName="Nächster Abschnitt">
+<CenterStepper nextRoute="/questions/pause" completeName="Nächster Abschnitt">
     {#each data as entry }
         <LockedStep  let:setLocked>
             <QuestionAndAnswer data={entry} {setLocked} />

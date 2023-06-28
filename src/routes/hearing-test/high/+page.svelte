@@ -3,6 +3,7 @@
     import SineSweep from "../SineSweep.svelte";
     import {hearingTestResultStore, sessionID} from "../../../store.ts";
     import {getContext} from "svelte";
+    import {goto} from "$app/navigation";
 
     const toMartin = getContext("isMartin")
 
@@ -32,8 +33,4 @@
 
 <SineSweep direction="down" on:ready={writeToStore}/>
 <p>Frage 4/4</p>
-<a href={nextPage}
-   class:bg-surface-300={!active}
-   class:variant-filled-primary={active}
-   class="btn font-bold md:w-32 w-full"
->Weiter</a>
+<button on:click={()=>{goto(nextPage)}}  disabled={!active} class="btn font-bold md:w-32 w-full variant-filled-primary">Weiter</button>
