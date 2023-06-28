@@ -44,7 +44,6 @@
             audioElement.play();
             isPlaying = true
         } else {
-            console.log("pause")
             audioElement.pause();
             isPlaying = false;
         }

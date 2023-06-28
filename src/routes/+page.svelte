@@ -2,15 +2,15 @@
     import MiddleCard from "$lib/MiddleCard.svelte";
 
     const content = [
-        {heading: "Inhalt", content: "Diese Studie befasst sich mit der Wahrnehmung von auditiven Image-Schemata"},
-        {heading: "Ablauf", content: "Sie werden Attribute zu Audiosequenzen zuordnen"},
-        {heading: "Aufwandsentschädigung", content: "Die vollständige Teilnahme wird mit 0.75 VPh vergütet"},
-        {
-            heading: "Freiwilligkeit",
-            content: "Die Teilnahme an der Studie ist freiwillig. " +
-                "Sie können jederzeit und ohne Angabe von Gründen die Teilnahme an dieser Studie beenden," +
-                " ohne dass Ihnen daraus Nachteile entstehen."
-        }
+        // {heading: "Inhalt", content: "Diese Studie befasst sich mit der Wahrnehmung von Audiokonzepten"},
+        // {heading: "Ablauf", content: "Sie werden Attribute zu Audiosequenzen zuordnen"},
+        // {heading: "Aufwandsentschädigung", content: "Die vollständige Teilnahme wird mit 1 VPh vergütet"},
+        // {
+        //     heading: "Freiwilligkeit",
+        //     content: "Die Teilnahme an der Studie ist freiwillig. " +
+        //         "Sie können jederzeit und ohne Angabe von Gründen die Teilnahme an dieser Studie beenden," +
+        //         " ohne dass Ihnen daraus Nachteile entstehen."
+        // }
     ]
 
     let ready = "Ready?"
