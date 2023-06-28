@@ -2,6 +2,7 @@
 
     import SineSweep from "../SineSweep.svelte";
     import {hearingTestResultStore} from "../../../store.ts";
+    import {goto} from "$app/navigation";
 
     let active = false
     function writeToStore(e) {
@@ -13,5 +14,4 @@
 
 <SineSweep on:ready={writeToStore}/>
 <p>Frage 3/4</p>
-<a href="high" class:bg-surface-300={!active} class:variant-filled-primary={active}
-   class="btn font-bold md:w-32 w-full">Weiter</a>
+<button on:click={()=>{goto("high")}}  disabled={!active} class="btn font-bold md:w-32 w-full variant-filled-primary">Weiter</button>
