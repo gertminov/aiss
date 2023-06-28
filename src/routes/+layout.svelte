@@ -13,12 +13,16 @@
     import {onMount} from "svelte";
     import {audioQuestions, setSessionTotal} from "../store";
     import {Fetcher} from "$lib/fetcher";
+    import {page} from "$app/stores";
+
+    const isTest = $page.url.searchParams.get("test")
+
 
 
     onMount(async () => {
         console.log("Mount Layout")
         const demographicPromise = Fetcher.demographicQuestions()
-        const sessionPromise = Fetcher.sessionID();
+        const sessionPromise = Fetcher.sessionID(isTest == 'true');
         const audioPromise = Fetcher.audioQuestions()
         const metaphorPromise = Fetcher.audioMetaphorQuestions()
         await sessionPromise

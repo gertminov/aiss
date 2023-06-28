@@ -1,4 +1,4 @@
-import {pgTable, serial, timestamp} from "drizzle-orm/pg-core";
+import {pgTable, serial, timestamp, boolean} from "drizzle-orm/pg-core";
 import type {InferModel} from "drizzle-orm";
 import type {NewResult} from "./Result";
 
@@ -6,7 +6,8 @@ export const SessionTable = pgTable(
     "sessions",
     {
         id: serial('id').primaryKey().notNull(),
-        startTime: timestamp('start_time').defaultNow()
+        startTime: timestamp('start_time').defaultNow(),
+        test: boolean("test").default(false)
     }
 )
 

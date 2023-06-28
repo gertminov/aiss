@@ -12,6 +12,8 @@ export const POST: RequestHandler = async ({request})=>{
 }
 
 async function createNewSession(request: Request) {
+    const res = await  request.json()
+
 
     ///--------TODO if the page has a sessionID in the store at the beginning it should be checked, whether there are
     // all results with that id. if not the session should jump the the last answered question or override everything.
@@ -20,7 +22,7 @@ async function createNewSession(request: Request) {
 
 
         try {
-            const sessionID = await createNewSessionInDB()
+            const sessionID = await createNewSessionInDB(res.test)
 
             console.log(sessionID)
             return json({id: sessionID})
