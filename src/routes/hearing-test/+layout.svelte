@@ -4,13 +4,16 @@
     import {page} from "$app/stores";
 
     const toMartin = $page.url.searchParams.get("martin")
-    if (toMartin.startsWith("metaphor")) {
+    if (!toMartin) {
+        setContext("isMartin", undefined);
+    } else if (toMartin.startsWith("metaphor")) {
         setContext("isMartin", "metaphor");
     } else if (toMartin === "image" || toMartin.startsWith("schema")) {
-        setContext("isMarting", "image")
+        setContext("isMarting", "image");
     } else {
-        setContext("isMartin", undefined)
+        setContext("isMartin", undefined);
     }
+
 </script>
 
 <MiddleCard>
