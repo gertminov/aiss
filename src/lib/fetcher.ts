@@ -5,9 +5,12 @@ import type {AudioQuestionData} from "$lib/data/AudioQuestion";
 import {QuestionAndAnswerClass} from "$lib/data/QuestionAndAnswerData";
 
 export class Fetcher {
-    static async sessionID() {
+    static async sessionID(isTest: boolean) {
         if (get(sessionIDStore) < 1) {
-            const sessionJson = await (await fetch("/api/sessions")).json()
+            const sessionJson = await (await fetch("/api/sessions", {
+                method: "POST",
+                body: JSON.stringify({test: isTest})
+            })).json()
             sessionIDStore.set(sessionJson.id)
         }
     }
@@ -37,8 +40,8 @@ export class Fetcher {
         }
     }
 
-    private static async getAudioQuestions(type: "scheme"|"metaphor") {
-        const audioJson = await (await fetch("/api/questions/audio?type="+type)).json() as AudioQuestionData[]
+    private static async getAudioQuestions(type: "scheme" | "metaphor") {
+        const audioJson = await (await fetch("/api/questions/audio?type=" + type)).json() as AudioQuestionData[]
         const qAndA = audioJson.map(quest => new QuestionAndAnswerClass(quest))
         const shuffeled = this.shuffleArray(qAndA)
         return shuffeled;
