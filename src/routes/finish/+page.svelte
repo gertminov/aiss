@@ -14,22 +14,44 @@
 
     }
 
+    async function fetchWithTimeout(resource, options = {}) {
+        const { timeout = 3000 } = options;
+
+        const controller = new AbortController();
+        const id = setTimeout(() => controller.abort(), timeout);
+
+        const response = await fetch(resource, {
+            ...options,
+            signal: controller.signal
+        });
+        clearTimeout(id);
+
+        return response;
+    }
+
+
     let responseError = false
+    let sending = true
 
     async function sendData(audioResults: NewAudioResultModel[]) {
         console.log("audioData")
         console.log(audioResults)
-        const res = await fetch("/api/results/audio", {
-            method: "POST",
-            body: JSON.stringify(audioResults)
-        })
-        if (res.ok) {
-            clearAllStores()
-        }else{
+        try {
+            const res = await fetchWithTimeout("/api/results/audio", {
+                method: "POST",
+                body: JSON.stringify(audioResults)
+            })
+            if (res.ok) {
+                clearAllStores()
+                sending = false
+            } else {
+                responseError = true
+                console.log("Error:")
+                console.log("status:", res.status)
+                console.log("statusText:", res.statusText)
+            }
+        } catch (e) {
             responseError = true
-            console.log("Error:")
-            console.log("status:", res.status)
-            console.log("statusText:",res.statusText)
         }
     }
 
@@ -41,9 +63,13 @@
     <MiddleCard>
         <div class="card-header"><h1 class="h1 font-bold">Danke fürs mitmachen</h1></div>
         {#if !responseError}
-            <section class="p-5 text-center">Sie könnnen das Fenster jetzt schließen</section>
+            {#if sending}
+                <section class="p-5 text-center">Sendet Daten. Bitte Fenster nicht schließen</section>
+            {:else}
+                <section class="p-5 text-center">Sie könnnen das Fenster jetzt schließen</section>
+            {/if}
         {:else}
-            <section>⚠️ Es gab ein kleines technisches Problem ⚠️. Bitte geben sie der Versuchsleitung bescheit</section>
+            <section class="p-5 text-center">⚠️ Es gab ein kleines technisches Problem ⚠️. Bitte geben Sie der Versuchsleitung bescheit</section>
         {/if}
     </MiddleCard>
 </div>

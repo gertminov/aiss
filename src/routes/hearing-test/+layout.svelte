@@ -4,9 +4,9 @@
     import {page} from "$app/stores";
 
     const toMartin = $page.url.searchParams.get("martin")
-    if (toMartin === "metaphor") {
+    if (toMartin.startsWith("metaphor")) {
         setContext("isMartin", "metaphor");
-    } else if (toMartin === "image") {
+    } else if (toMartin === "image" || toMartin.startsWith("schema")) {
         setContext("isMarting", "image")
     } else {
         setContext("isMartin", undefined)
