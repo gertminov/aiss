@@ -21,7 +21,7 @@
             <p class="pt-2">
                 Versuchen sie intuitiv ohne viel nachdenken zu entscheiden
             </p>
-            <p>Der Fragebogen besteht aus <span class="text-primary-500">drei Teilen</span>, <br> wundern Sie sich also nicht wenn sie die gleichen Töne mehrmals hören.</p>
+            <p>Der Fragebogen besteht aus <span class="text-primary-500">zwei Teilen</span>, <br> wundern Sie sich also nicht wenn sie die gleichen Töne mehrmals hören.</p>
             <div class="h-full "></div>
             <div class="flex justify-center px-8">
                 <a href="/questions" class="btn variant-filled-primary font-bold md:w-32 w-full">Weiter</a>
