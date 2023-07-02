@@ -7,6 +7,7 @@ import {z} from "zod";
 
 const audioResults = z.array(insertAudioResultSchema)
 export const POST: RequestHandler = async event =>{
+    console.log("event")
     const data = await event.request.json();
     const res = audioResults.safeParse(data)
     if (!res.success) {
@@ -24,5 +25,6 @@ export const POST: RequestHandler = async event =>{
         throw error(500, "error while inserting audioAnswers into Database")
     }
 
+    console.log("returnung res")
     return  new Response("", {status: 200})
 }
