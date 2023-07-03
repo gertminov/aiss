@@ -9,7 +9,7 @@
     } else if (toMartin.startsWith("metaphor")) {
         setContext("isMartin", "metaphor");
     } else if (toMartin === "image" || toMartin.startsWith("schema")) {
-        setContext("isMarting", "image");
+        setContext("isMartin", "image");
     } else {
         setContext("isMartin", undefined);
     }
