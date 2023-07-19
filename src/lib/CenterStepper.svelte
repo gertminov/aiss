@@ -25,7 +25,7 @@
 
 <div class="h-full w-full grid content-center">
     <div class="flex justify-center">
-        <div class="card p-4 md:w-8/12">
+        <div class="card p-4 md:w-8/12 ">
             <Stepper on:step={onStepHandler}
                      on:complete={onCompleteHandler}
                      gap="gap-1 md:gap-2 lg:gap-4"

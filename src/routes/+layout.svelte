@@ -14,9 +14,12 @@
     import {audioQuestions, setSessionTotal} from "../store";
     import {Fetcher} from "$lib/fetcher";
     import {page} from "$app/stores";
+    import {setExpoContext} from "$lib/expoContext";
 
     const isTest = $page.url.searchParams.get("test")
 
+    const path = $page.url.pathname
+    setExpoContext(path.includes("expo"))
 
 
     onMount(async () => {
@@ -39,9 +42,16 @@
 <AppShell>
     <svelte:fragment slot="header">
         <AppBar>
-            <p class="p-0 leading-tight">
-                <b>PSY</b><br> ERGO
-            </p>
+            <svelte:fragment slot="lead">
+                <p class="p-0 leading-tight">
+                    <b>PSY</b><br> ERGO
+                </p>
+            </svelte:fragment>
+            <svelte:fragment slot="trail">
+                {#if path.includes("expo")}
+                    <p class="text-lg font-bold">EXPO</p>
+                {/if}
+            </svelte:fragment>
         </AppBar>
     </svelte:fragment>
     <slot/>
