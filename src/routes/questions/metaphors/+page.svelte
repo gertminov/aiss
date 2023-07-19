@@ -12,9 +12,9 @@
 
     const expoQuestions = [
         {answer: "smooth:smooth-chopped", option: "Unproblematisch",},
-        {answer: "bright:harmonic-high-cut", option: "Fröhlich"},
+        {answer: "bright:harmonic-high-cut", option: "Gut"},
         {answer: "straight", option: "Moralisch"},
-        {answer: "heavy:808-plug", option: "Sicher"},
+        {answer: "heavy:808-plug", option: "Traurig"},
         {answer: "matching:different-same-sound", option: "Ruhig"}
     ]
 
@@ -24,7 +24,10 @@
         let expoData = []
         for (let datum of data) {
             for (let expoQuestion of expoQuestions) {
-                if (datum.answers.one.id == expoQuestion.answer && datum.options[0].text == expoQuestion.option) {
+                if (
+                    datum.answers.one.id == expoQuestion.answer
+                    && (datum.options[0].text == expoQuestion.option || datum.options[1].text == expoQuestion.option)
+                ) {
                     expoData.push(datum)
                 }
             }
