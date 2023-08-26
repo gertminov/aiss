@@ -1,4 +1,4 @@
-# Audio Image-Schemata Survey (AISS)
+# Audio Image-Schema Survey (AISS)
 
 This is a survey tool to question people about image schemata
 
