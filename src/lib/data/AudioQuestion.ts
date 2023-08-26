@@ -32,14 +32,22 @@ export interface AudioQuestionData extends NewAudioQuestionModel {
 }
 
 
+type AudioFields<ID1 extends string, ID2 extends string> = {
+    [answer in ID1 | ID2 | "description"]: string
+} & {variant?: string}
+
+
 type questionSchema<ID1 extends string, ID2 extends string> = {
     schema: Record<ID1 | ID2, string>
     metaphors: {
         [answers in ID1 | ID2 | "id"]: string
     }[],
-    audios: { [answer in ID1 | ID2 | "description"]: string }[],
+    // audios: { [answer in ID1 | ID2 | "description"]: string }[],
+     audios: AudioFields<ID1, ID2>[]
     nach?: boolean
 }
+
+
 
 type questionConfig = {
     id: string,
@@ -52,6 +60,11 @@ type questionConfig = {
     answer2: { audioURL: string, id: string },
     description: string,
     type: "scheme" | "metaphor",
+    variant?: string,
+    /**
+     * Image-Schema ID
+     */
+    isID: string,
     nach: boolean
 }
 
@@ -69,7 +82,9 @@ export class AudioQuestion implements AudioQuestionData {
         public option1: string,
         public option2: string,
         description: string,
-        public type?: "scheme" | "metaphor"
+        public type?: "scheme" | "metaphor",
+        public variant?: string,
+        public isID?: string
     ) {
         this.answer1ID = answer1Obj.id
         this.answer2ID = answer2Obj.id
@@ -118,15 +133,17 @@ export class AudioQuestion implements AudioQuestionData {
     // }
 
     static generate<ID1 extends string, ID2 extends string>(id1: ID1, id2: ID2, options: questionSchema<ID1, ID2>) {
-        const id = `${id1}-${id2}`
+        // Image-Schema ID
+        const isID = `${id1}-${id2}`
         const answerOptions = options.audios.map(pair => ({
-            id: this.getID(id, pair[id1]),
+            variant: pair.variant,
+            id: this.getID(isID, pair[id1]),
             audio1: {
-                audioURL: this.buildAudioURL(id, pair[id1]),
+                audioURL: this.buildAudioURL(isID, pair[id1]),
                 id: this.getID(id1, pair[id1])
             },
             audio2: {
-                audioURL: this.buildAudioURL(id, pair[id2]),
+                audioURL: this.buildAudioURL(isID, pair[id2]),
                 id: this.getID(id2, pair[id2])
             },
             description: pair.description,
@@ -140,12 +157,14 @@ export class AudioQuestion implements AudioQuestionData {
             answer2: {...option.audio2},
             description: option.description,
             type: "scheme",
+            variant: option.variant,
+            isID: isID,
             nach: options.nach || false
         }))
 
         const metaphors: questionConfig[] = answerOptions.flatMap(option => {
             const split = option.id.split(":")
-            const secondIDPart = split[1] ||  ""
+            const secondIDPart = split[1] || ""
             return options.metaphors.map(metaphor => ({
                 id: metaphor.id + ":" + secondIDPart,
                 answerOption1: metaphor[id1],
@@ -154,6 +173,8 @@ export class AudioQuestion implements AudioQuestionData {
                 answer2: {...option.audio2},
                 description: option.description,
                 type: "metaphor",
+                variant: option.variant,
+                isID: isID,
                 nach: options.nach || false
             }))
         })
@@ -168,7 +189,9 @@ export class AudioQuestion implements AudioQuestionData {
                 q.answerOption1,
                 q.answerOption2,
                 q.description,
-                q.type
+                q.type,
+                q.variant,
+                q.isID
             )
         })
     }
@@ -185,7 +208,7 @@ export class AudioQuestion implements AudioQuestionData {
 
 
     static buildAudioURL(category: string, url: string) {
-        const firstPart = baseAudioURL  + category + "/"
+        const firstPart = baseAudioURL + category + "/"
         return url.endsWith(".mp3") ? firstPart + url : firstPart + url + ".mp3";
     }
 
